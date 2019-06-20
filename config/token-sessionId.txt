@@ -1,0 +1,22 @@
+APIAI_TOKEN="b44ec5d4fc8f483094c52d8ea6e102e9"
+APIAI_SESSION_ID="ac7af217-4ff8-fb7b-8d46-a6a50afcb598"
+
+APIAI_TOKEN="7cb0a1807ad140f89223a89053a4b6bf"
+APIAI_SESSION_ID="ba774543-c6ae-4ef4-8e29-b3a2506a8f0e"
+
+iicathenabot
+Developer access token - 96aeea12990f4b7584d98df961456d67
+Client access token - 581cdf02e6f34b01854e881e282e8915
+session id - a516467d-bcfc-1a3d-0236-baf506190031
+
+athena dev sushmita
+Developer access token - 8b1cbd8fc4bf463686ae60326d189697
+Client access token - ce921f0c5ca049daa822dc602709756a
+session id - d4fb3852-b6ba-1c3a-062b-93ed190ec3de
+
+
+
+athena live sushmita
+Client access token - 5c98895e6770485698f5bb5cf7655148
+session id - 2de500a1-0031-980a-e014-d3e0f5cbceab
+

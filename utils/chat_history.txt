@@ -1,0 +1,9 @@
+Date : 2019-02-21  09:32:46 
+You : hi 
+Bot : Hi there, friend! 
+Date : 2019-02-21  09:33:02 
+You : hello 
+Bot : Hi there, friend! 
+Date : 2019-02-21  09:33:35 
+You : hello athena 
+Bot : Hello Sessionvariable.name, Tell me how can I help you? Please choose a sector of your choice: ^Farm^, ^Auto^, ^Other Biz^ 

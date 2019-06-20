@@ -1,0 +1,1 @@
+module.exports.baseUrl = "http://13.232.168.178:8000/processdata";
