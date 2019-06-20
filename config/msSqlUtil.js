@@ -6,15 +6,15 @@ var sql = require("mssql");
 
 // config for your database
 var config = {
-   user: 'sa',
-   password: 'shezar@123',
-   server: 'DESKTOP-PTAUQID',
-   database: 'Athena'
+//    user: 'sa',
+//    password: 'shezar@123',
+//    server: 'DESKTOP-PTAUQID',
+//    database: 'Athena'
 
-    //  user: 'iic_aditya',
-    //  password: 'aditya@123',
-    //  server: "103.81.88.102", 
-    //  database: 'BOT' 
+     user: 'iic_aditya',
+     password: 'aditya@123',
+     server: "103.81.88.102", 
+     database: 'BOT' 
 };
 
 

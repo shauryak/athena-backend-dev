@@ -112,7 +112,7 @@ module.exports.getBotResponse = function (req, res) {
 
       ;
 
-    console.log(paramteresJson);
+  //  console.log(paramteresJson);
     if (paramteresJson) {
 
       if (paramteresJson.kpi_name) {
@@ -408,7 +408,7 @@ module.exports.getBotResponse = function (req, res) {
 
     };
 
-  console.log("DL model request body is " + JSON.stringify(json, null, 4));
+ // console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 
