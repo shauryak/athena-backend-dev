@@ -17,7 +17,7 @@ var base64Img = require('base64-img');
 const download = require('image-downloader');
 //enables cors
 
-module.exports.getBotResponse = function (req, res) {
+module.exports.getBotResponse = function (req, res,next) {
 
   if (!req.query.userId) return res.status(400).send("userId cannot be empty");
   if (!req.query.q) return res.status(400).send("user query q cannot be empty");
@@ -46,7 +46,7 @@ module.exports.getBotResponse = function (req, res) {
 
     }
 
-  // console.log(paramteresJson);
+ //  console.log(paramteresJson);
 
     let entity0 = "",
       entity1 = "",
@@ -408,7 +408,7 @@ module.exports.getBotResponse = function (req, res) {
 
     };
 
- // console.log("DL model request body is " + JSON.stringify(json, null, 4));
+  //console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 
@@ -435,7 +435,7 @@ module.exports.getBotResponse = function (req, res) {
     var aiText = response.result.fulfillment.speech;
 
     if (!aiText.includes("****")) {
-      insertRecord(employeeId, text, aiText, function (id) {
+      insertRecord(next,employeeId, text, aiText, function (id) {
         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "id": id }));
       });
     }
@@ -451,12 +451,12 @@ module.exports.getBotResponse = function (req, res) {
             var concatedAiText = "";
             if (body.Text && body.Text == 1) {
               concatedAiText = aiText.replace("****", body.TextContent);
-              insertRecord(employeeId, text, concatedAiText, function (id) {
+              insertRecord(next,employeeId, text, concatedAiText, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText, "id": id }));
               });
             }
              else if (body.Chart && body.ChartURL && body.Chart == 1) {
-              insertRecord(employeeId, text, body.ChartURL, function (id) {
+              insertRecord(next,employeeId, text, body.ChartURL, function (id) {
                                return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null,"response": aiText, "responseBody": body, "id": id }));
               });
             }            else {
@@ -552,14 +552,18 @@ module.exports.getBotResponse = function (req, res) {
 
 //var insertRecord = function (employeeId, userText, aiText) {
 
-async function insertRecord(employeeId, userText, aiText, fn) {
+async function insertRecord(next,employeeId, userText, aiText, fn) {
   var request = new sql.Request();
   request.input('HD_MASK_ID', sql.VarChar, employeeId);
   request.input('text', sql.VarChar, userText);
   request.input('aiText', sql.VarChar, aiText);
   var chatHistorySql = "INSERT INTO chat_history (employee_id, user_query,bot_response) VALUES (@HD_MASK_ID,@text,@aiText);SELECT SCOPE_IDENTITY() AS id;";
   request.query(chatHistorySql, function (err, result) {
-    if (err) throw err;
+    if (err) 
+    {
+      //console.log(err);
+      return next(err);
+    }
 
     else {
       // console.log("chat history record inserted");

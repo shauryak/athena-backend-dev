@@ -36,7 +36,7 @@ module.exports.getConversationHistory = function (req, res) {
 
 };
 
-module.exports.postConversationHistory = function (req, res) {
+module.exports.postConversationHistory = function (req, res,next) {
 
     const result = Joi.validate(req.body, schema);
 
@@ -71,8 +71,9 @@ module.exports.postConversationHistory = function (req, res) {
 
     request.query(countResultQuery, function (err, recordset) {
         if (err) {
-            console.log(err);
-            return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+            // console.log(err);
+            // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+           return next(err);
         }
 
          totalRecords = recordset.recordset[0][""];
@@ -83,8 +84,9 @@ module.exports.postConversationHistory = function (req, res) {
 
         request.query(stringRequest, function (err, recordset) {
             if (err){
-                console.log(err);
-                return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+                // console.log(err);
+                // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+                next(err);
               }
 
           return res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": {"totalRecords":totalRecords ,"responseBody":recordset.recordset} }));

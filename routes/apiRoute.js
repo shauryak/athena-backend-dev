@@ -4,6 +4,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var sql = require('../config/msSqlUtil')
+const errorHandler = require('../utils/errorHandler');
 
 //var upload = multer({ dest: 'uploads/' });
 var storage = multer.diskStorage({
@@ -114,4 +115,5 @@ router.route('/uploadFile')
 
 // };
 
+router.use(errorHandler.errorHandler);
 module.exports = router;

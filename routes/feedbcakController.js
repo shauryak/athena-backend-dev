@@ -7,7 +7,7 @@ var sql = require('../config/msSqlUtil');
 
 app.use(bodyParser.json());
 
-module.exports.updateFeedback = function (req, res) {
+module.exports.updateFeedback = function (req, res,next) {
     var feedbackBody = req.body;
     const result = Joi.validate(feedbackBody, feedBackSchema);
     if (result.error) {
@@ -18,7 +18,11 @@ module.exports.updateFeedback = function (req, res) {
     request.input('feedback', sql.Bit, feedbackBody.feedback);
     var feedbackSqlQuery = "update chat_history set feedback = @feedback where id = @id";
     request.query(feedbackSqlQuery, function (err, result) {
-        if (err) throw err;
+        if (err) {
+          //    throw err
+         // console.log(err);
+          return next(err);
+        }
         else {
             if (result && result.rowsAffected  && result.rowsAffected[0] > 0)
             {

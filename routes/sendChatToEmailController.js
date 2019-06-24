@@ -30,7 +30,10 @@ module.exports.sendConversationHistoryToEmail = function (req, res, next) {
 
   var stringRequest = `select * from chat_history where  employee_id = '${userId}' and id in (${ids}) order by created_date desc`;
   request.query(stringRequest, function (err, recordset) {
-    if (err) console.log(err);
+   if (err) {
+    //console.log(err);
+   return next(err)
+};
     var data = recordset.recordset;
 
     if (data.length > 0) {
@@ -87,9 +90,8 @@ module.exports.sendConversationHistoryToEmail = function (req, res, next) {
         transporter.sendMail(mailOptions, function (error, info) {
 
           if (error) {
-            console.log(error);
+         //  console.log(error);
             res.status(500).send(JSON.stringify({ "statusCode": 500, "error": error, "response": "Issues in smtp server" }));
-
 
           } else {
             // console.log('Email sent: ' + info.response);
