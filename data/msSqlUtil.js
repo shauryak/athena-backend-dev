@@ -19,7 +19,7 @@ const serversqlConfig = require('../config/config').serverdb;
 //     //  database: 'BOT' 
 // };
 
-var config = localsqlConfig;
+var config = serversqlConfig;
 
 //connect to your database
 
