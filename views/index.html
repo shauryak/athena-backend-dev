@@ -1,62 +1,72 @@
-
-
-
 <html>
-  <head>
 
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
-  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="/css/athena.css">
-  <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<head>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css"
+        rel="stylesheet">
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/athena.css">
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <!------ Include the above in your HEAD tag ---------->
-  <style>
-     
-  </style>
-  </head>
-  <body>
-  <div class="container">
-  
-  <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <div class=""     style = "border: 1px solid gray;height: 35rem; margin-top: 3%;overflow: auto ;">
-             
-                  <div class="panel panel-primary">
-                      <div class="panel-heading">
-                          <div class="panel-title " style="background: #05728f;height: 13%;">
-                         
-                              <h3 class=" text-center"  style = "color: white">Athena</h3>
-                          </div>
-                      </div>
-                     
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <style>
 
-                      <div class="panel-body" id="panel-body" ></div>
-                      <!-- <div class="type_msg" style="margin-top: 0%;border: 1px solid gray;">
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="" style="border: 1px solid gray;height: 35rem; margin-top: 3%;overflow: auto ;">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title " style="background: #05728f;height: 13%;">
+
+                                <h3 class=" text-center" style="color: white">Athena</h3>
+                            </div>
+                        </div>
+
+
+                        <div class="panel-body" id="panel-body"></div>
+                        <!-- <div class="type_msg" style="margin-top: 0%;border: 1px solid gray;">
                         <div class="input_msg_write">
                             <input type="text" class="write_msg" placeholder="Type a message" id="inputText" onkeypress="inputTextByEnterKey(event)"/>
                             <button class="msg_send_btn" type="button"><i class="fa fa-microphone"  aria-hidden="true" id="microphone"></i></button>
                         </div>
                     </div> -->
                     </div>
-                   
-              </div>
-              <div class="type_msg" style="margin-top: 0%;border: 1px solid gray;" id="type_msg">
-                <div class="input_msg_write" id="input_msg_write">
-                    <input type="text" class="write_msg" placeholder="Type a message" id="inputText" onkeypress="inputTextByEnterKey(event)" title="Type a message to ask"/>
-                    <button class="msg_send_btn" type="button" title="Ask by voice"><i class="fa fa-microphone"  aria-hidden="true" id="microphone"></i></button>
+
+                </div>
+                <div class="type_msg" style="margin-top: 0%;border: 1px solid gray;" id="type_msg">
+                    <div class="input_msg_write" id="input_msg_write">
+                        <input type="text" class="write_msg" placeholder="Type a message" id="inputText"
+                            onkeypress="inputTextByEnterKey(event)" title="Type a message to ask" />
+                        <button class="msg_send_btn" type="button" title="Ask by voice"><i class="fa fa-microphone"
+                                aria-hidden="true" id="microphone"></i></button>
+                    </div>
                 </div>
             </div>
-          </div>
-          <div class="col-md-3"></div>
-  </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" ></script>
-  <script src="/socket.io/socket.io.js"></script>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="js/script.js"></script>
-      </body>
-      </html>
+</body>
+
+</html>

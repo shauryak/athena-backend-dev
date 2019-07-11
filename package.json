@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "apiai": "^4.0.3",
-    "assert": "^1.4.1",
+    "assert": "^1.5.0",
     "async": "^2.6.1",
     "base64-img": "^1.0.4",
     "body-parser": "^1.18.3",
@@ -24,6 +24,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "express-validator": "^5.3.1",
+    "helmet": "^3.18.0",
     "image-downloader": "^3.4.2",
     "joi": "^14.3.1",
     "joi-date-extensions": "^1.2.0",
@@ -37,6 +38,8 @@
     "request": "^2.88.0",
     "socket.io": "^2.2.0",
     "socketio": "^1.0.0",
+    "sql-inject-reject": "^0.1.0",
+    "sql-injection": "0.0.6",
     "tedious": "^5.0.3",
     "validator": "^10.11.0",
     "xlsx": "^0.14.2"

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
 module.exports = {
-    id : Joi.number().required(),
-    feedback : Joi.bool().required()
+    id: Joi.number().required(),
+    feedback: Joi.bool().required()
 }

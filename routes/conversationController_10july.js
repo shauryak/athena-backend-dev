@@ -43,7 +43,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     }
 
-      // console.log(paramteresJson);
+    //  console.log(paramteresJson);
 
     let entity0 = "",
       entity1 = "",
@@ -406,7 +406,7 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter2["date-period"]) date = followupwherefilter2["date-period"];
             if (followupwherefilter2.number) sysNumber = followupwherefilter2.number;
             if (followupwherefilter2.Department) department = followupwherefilter2.Department;
-            if (followupwherefilter2.Sub-department) subDepartment = followupwherefilter2.Sub-department;
+            if (followupwherefilter2.Sub - department) subDepartment = followupwherefilter2.Sub - department;
             if (followupwherefilter2.company) company = followupwherefilter2.company;
           }
 
@@ -552,7 +552,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     };
 
-  //  console.log("DL model request body is " + JSON.stringify(json, null, 4));
+   // console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 

@@ -8,11 +8,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 var router = express.Router();
-//var sql = require('../config/msSqlUtil')
+//var sql = require('../data/msSqlUtil')
 const apiai = require('apiai')(APIAI_TOKEN);
 const mysql = require('mysql');
 const requestModule = require('request');
-var baseUrl = require('../config/baseUrl');
+var baseUrl = require('../constants/baseUrl');
 //enables cors
 
 module.exports.getBotResponse = function (req, res) {
@@ -150,28 +150,28 @@ module.exports.getBotResponse = function (req, res) {
   apiaiReq.on('response', (response) => {
 
     let paramteresJson = response.result.parameters;
-   // console.log("outside output context");
+    // console.log("outside output context");
     //console.log(paramteresJson);
 
     let contextJson = response.result.contexts;
     if (typeof contextJson !== 'undefined' && contextJson) {
       let length = contextJson.length;
 
-        if (length > 0) {
+      if (length > 0) {
         if (typeof contextJson[length - 1].parameters !== 'undefined' && contextJson[length - 1].parameters) {
-           paramteresJson = contextJson[length - 1].parameters;
+          paramteresJson = contextJson[length - 1].parameters;
           // console.log("inside output context");
-         //  console.log(paramteresJson);
-      
-          }
+          //  console.log(paramteresJson);
+
+        }
       }
 
     }
 
-  //  console.log("passed to dl model");
-   // console.log(paramteresJson);
+    //  console.log("passed to dl model");
+    // console.log(paramteresJson);
 
-     let entity1 = "",
+    let entity1 = "",
       entity2 = "",
       entity3 = "",
       sector = "",
@@ -258,16 +258,16 @@ module.exports.getBotResponse = function (req, res) {
     }
 
     else {
-    
+
       requestModule.post("http://13.232.168.178:8000/customapi", { json: json },
 
         function (error, responseDlModel, body) {
-         
-         if (!error && responseDlModel.statusCode == 200) {
+
+          if (!error && responseDlModel.statusCode == 200) {
 
             var concatedAiText = "";
             if (body.Text && body.Text == 1) {
-           
+
               concatedAiText = aiText.replace("****", body.TextContent);
               return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
             }

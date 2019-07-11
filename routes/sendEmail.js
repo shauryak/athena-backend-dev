@@ -21,8 +21,8 @@ var mailOptions = {
        <span>Regards,</span>
        <br>
        <span>Aditya</span> `,
-   // attachments: [{'filename': 'chat_history.txt'}]
-   
+  // attachments: [{'filename': 'chat_history.txt'}]
+
 };
 
 // transporter.sendMail(mailOptions, function (error, info) {

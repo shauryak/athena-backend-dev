@@ -9,19 +9,19 @@ function initDb(callback) {
         console.warn("Trying to init DB again!");
         return callback(null, _db);
     }
-client.connect("mongodb://localhost:27017/"+database, connected);
-function connected(err, db) {
+    client.connect("mongodb://localhost:27017/" + database, connected);
+    function connected(err, db) {
         if (err) {
             return callback(err);
         }
-        console.log("successfully connected to database" );
-       _db = db.db(database);
+        console.log("successfully connected to database");
+        _db = db.db(database);
         return callback(null, _db);
     }
 }
 
 function getDb() {
-   // assert.ok(_db, "Db has not been initialized. Please called init first.");
+    // assert.ok(_db, "Db has not been initialized. Please called init first.");
     return _db;
 }
 

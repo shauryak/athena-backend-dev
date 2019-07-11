@@ -8,11 +8,11 @@ var storage = multer.diskStorage({
     fileFilter: function (req, file, cb) {
         console.log(path.extname(file.originalname));
         if (path.extname(file.originalname) !== 'XLSX') {
-                return cb(new Error('Only XLSX are allowed'))
-         }
+            return cb(new Error('Only XLSX are allowed'))
+        }
 
         cb(null, true)
-      },
+    },
     destination: function (req, file, cb) {
         cb(null, './public/uploads')
     },
@@ -59,7 +59,7 @@ router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
 
-   // console.log('api route ');
+    // console.log('api route ');
     res.send('welcome to api route');
 
 })
@@ -80,7 +80,7 @@ router.route('/conversation')
     .get(conversationController.getBotResponse);
 
 router.route('/sendemail')
-   .post(sendChatToEmailController.sendConversationHistoryToEmail);
+    .post(sendChatToEmailController.sendConversationHistoryToEmail);
 
 router.route('/uploadFile')
     .post(upload.single('file'), uploadFileController.uploadFile);

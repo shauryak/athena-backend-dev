@@ -8,7 +8,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 var router = express.Router();
-var sql = require('../config/msSqlUtil')
+var sql = require('../data/msSqlUtil')
 const apiai = require('apiai')(APIAI_TOKEN);
 const mysql = require('mysql');
 //enables cors

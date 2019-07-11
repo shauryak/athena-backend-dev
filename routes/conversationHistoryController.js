@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 const Joi = require('joi');
 const schema = require('../model/chatHistoryModel');
-var sql = require('../config/msSqlUtil');
+var sql = require('../data/msSqlUtil');
 
 app.use(expressValidator());
 app.use(bodyParser.json());
@@ -36,7 +36,7 @@ module.exports.getConversationHistory = function (req, res) {
 
 };
 
-module.exports.postConversationHistory = function (req, res,next) {
+module.exports.postConversationHistory = function (req, res, next) {
 
     const result = Joi.validate(req.body, schema);
 
@@ -64,34 +64,66 @@ module.exports.postConversationHistory = function (req, res,next) {
     let offset = (pageIndex - 1) * itemsPerPage;
     let limit = itemsPerPage;
     let totalRecords = 0;
+    // var request = new sql.Request();
+    // var countResultQuery = `select count(*) from chat_history where  employee_id = '${userId}' and created_date between '${startDate}' and '${endDate}' `;
+    // console.log(countResultQuery);
+    // request.query(countResultQuery, function (err, recordset) {
+    //     if (err) {
+    //         // console.log(err);
+    //         // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+    //        return next(err);
+    //     }
+
+    //      totalRecords = recordset.recordset[0][""];
+    //      console.log(totalRecords);
+    //     var stringRequest = `select id,user_query,bot_response,created_date from chat_history where  employee_id = '${userId}' and created_date between '${startDate}' and '${endDate}' order by created_date desc
+    //       OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY `;
+    //     console.log(stringRequest);
+
+    //     request.query(stringRequest, function (err, recordset) {
+    //         if (err){
+    //             // console.log(err);
+    //             // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+    //             next(err);
+    //           }
+
+    //       return res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": {"totalRecords":totalRecords ,"responseBody":recordset.recordset } }));
+    //     });
+
 
     var request = new sql.Request();
-    var countResultQuery = `select count(*) from chat_history where  employee_id = '${userId}' and created_date between '${startDate}' and '${endDate}' `;
-   // console.log(countResultQuery);
-
+    request.input('userId', sql.VarChar, userId);
+    request.input('startDate', sql.VarChar, startDate);
+    request.input('endDate', sql.VarChar, endDate);
+    request.input('offset', sql.Int, offset);
+    request.input('limit', sql.Int, limit);
+    var countResultQuery = `select count(*) from chat_history where  employee_id = @userId and created_date between @startDate and @endDate`;
     request.query(countResultQuery, function (err, recordset) {
         if (err) {
             // console.log(err);
             // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
-           return next(err);
+            return next(err);
         }
 
-         totalRecords = recordset.recordset[0][""];
+        totalRecords = recordset.recordset[0][""];
+        if (totalRecords > 0) {
+            var stringRequest = `select id,user_query,bot_response,created_date from chat_history where  employee_id = @userId and created_date between @startDate and @endDate order by created_date desc
+            OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY `;
 
-        var stringRequest = `select id,user_query,bot_response,created_date from chat_history where  employee_id = '${userId}' and created_date between '${startDate}' and '${endDate}' order by created_date desc
-          OFFSET ${offset} ROWS FETCH NEXT ${limit} ROWS ONLY `;
-       // console.log(stringRequest);
+            request.query(stringRequest, function (err, recordset) {
+                if (err) {
+                    // console.log(err);
+                    // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+                    next(err);
+                }
 
-        request.query(stringRequest, function (err, recordset) {
-            if (err){
-                // console.log(err);
-                // return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
-                next(err);
-              }
+                return res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": { "totalRecords": totalRecords, "responseBody": (recordset ? recordset.recordset : recordset) } }));
+            });
+        }
+        else {
+            return res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": { "totalRecords": totalRecords, "responseBody": [] } }))
+        }
 
-          return res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": {"totalRecords":totalRecords ,"responseBody":recordset.recordset} }));
-        });
-       
     });
 
 

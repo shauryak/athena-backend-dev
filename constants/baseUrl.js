@@ -1,0 +1,1 @@
+module.exports.BASE_URL = "http://13.232.168.178:8000/customapi";

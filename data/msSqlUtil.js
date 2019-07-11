@@ -3,27 +3,30 @@ const app = express()
 const port = 8000
 
 var sql = require("mssql");
+const localsqlConfig = require('../config/config').localdb;
+const serversqlConfig = require('../config/config').serverdb;
 
 // config for your database
-var config = {
+// var config = {
 //    user: 'sa',
 //    password: 'shezar@123',
 //    server: 'DESKTOP-PTAUQID',
 //    database: 'Athena'
 
-     user: 'iic_aditya',
-     password: 'aditya@123',
-     server: "103.81.88.102", 
-     database: 'BOT' 
-};
+//     //  user: 'iic_aditya',
+//     //  password: 'aditya@123',
+//     //  server: "103.81.88.102", 
+//     //  database: 'BOT' 
+// };
 
+var config = localsqlConfig;
 
 //connect to your database
 
 sql.connect(config, function (err) {
 
     if (err) console.log(err);
-    else{
+    else {
         console.log("connected to ms sql database");
     }
 });

@@ -12,8 +12,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const logger = require('morgan')
 const apiRoute = require('./routes/apiRoute')
-//const dbConnect = require('./config/dbConnect.js')
-global.con = require('./config/mysqlUtil.js')
+//const dbConnect = require('./data/dbconnect.js')
+global.con = require('./data/msSqlUtil')
 var Chart = require('chart.js');
 const path = require('path');
 var viewPath = path.join(__dirname + '/views/')
@@ -48,7 +48,7 @@ app.use(logger('dev'))
 //   }
 // })
 
-con.connect(function(err) {
+con.connect(function (err) {
   if (err) throw err;
   console.log("Connected!");
 });

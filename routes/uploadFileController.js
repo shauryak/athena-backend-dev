@@ -15,7 +15,4 @@ module.exports.uploadFile = function (req, res, next) {
 
         return res.status(400).send(JSON.stringify({ "statusCode": 400, "error": filename, "response": null }));
     }
-
-
-
 };

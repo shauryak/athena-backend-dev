@@ -3,7 +3,7 @@ var app = express();
 var router = express.Router();
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var sql = require('../config/msSqlUtil')
+var sql = require('../data/msSqlUtil')
 const errorHandler = require('../utils/errorHandler');
 
 //var upload = multer({ dest: 'uploads/' });
@@ -37,6 +37,7 @@ var updateChatHistoryFeedback = require('./feedbcakController');
 // Add headers
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ urlencoded: true })) //support x-www-form-urlencoded
+//app.use({extended : false});
 
 
 app.use(function (req, res, next) {
@@ -54,19 +55,15 @@ app.use(function (req, res, next) {
     // to the API (e.g. in case you use sessions)
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
+    // Pass to next layer of middleware 
     next();
 });
 
 router.use(bodyParser.json());
 
-router.get('/', (req, res) => {
-
-    // console.log('api route ');
-    res.send('welcome to api route');
-
-})
-
+// router.get('/', (req, res) => {
+//     res.send('welcome to api route');
+// })
 
 router.route('/getconversationhistory')
     .get(chatHistoryController.getConversationHistory)
@@ -83,10 +80,10 @@ router.route('/conversation')
     .get(conversationController.getBotResponse);
 
 router.route('/sendemail')
-   .post(sendChatToEmailController.sendConversationHistoryToEmail);
+    .post(sendChatToEmailController.sendConversationHistoryToEmail);
 
 router.route('/updateFeedback')
-.put(updateChatHistoryFeedback.updateFeedback);   
+    .put(updateChatHistoryFeedback.updateFeedback);
 
 router.route('/uploadFile')
     .post(upload.single('file'), uploadFileController.uploadFile);
