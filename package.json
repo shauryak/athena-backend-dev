@@ -36,8 +36,6 @@
     "nodemailer": "^5.1.1",
     "path": "^0.12.7",
     "request": "^2.88.0",
-    "socket.io": "^2.2.0",
-    "socketio": "^1.0.0",
     "sql-inject-reject": "^0.1.0",
     "sql-injection": "0.0.6",
     "tedious": "^5.0.3",
