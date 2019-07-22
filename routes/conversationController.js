@@ -43,7 +43,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     }
 
-      // console.log(paramteresJson);
+    //  console.log(paramteresJson);
 
     let entity0 = "",
       entity1 = "",

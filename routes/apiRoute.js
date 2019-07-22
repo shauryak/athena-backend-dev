@@ -36,9 +36,8 @@ var updateChatHistoryFeedback = require('./feedbcakController');
 
 // Add headers
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ urlencoded: true })) //support x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true })) //support x-www-form-urlencoded
 //app.use({extended : false});
-
 
 app.use(function (req, res, next) {
 
