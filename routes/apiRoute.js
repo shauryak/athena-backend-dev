@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var sql = require('../data/msSqlUtil')
 const errorHandler = require('../utils/errorHandler');
+var verifyToken = require('../security/auth');
 
 //var upload = multer({ dest: 'uploads/' });
 var storage = multer.diskStorage({
@@ -63,6 +64,8 @@ router.use(bodyParser.json());
 // router.get('/', (req, res) => {
 //     res.send('welcome to api route');
 // })
+
+router.all('*',verifyToken.verifyToken);
 
 router.route('/getconversationhistory')
     .get(chatHistoryController.getConversationHistory)

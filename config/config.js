@@ -19,7 +19,8 @@ const { PORT,
     SQL_PASSWORD,
     NODE_ENV,
     APIAI_TOKEN,
-    APIAI_SESSION_ID
+    APIAI_SESSION_ID,
+    SECRET_KEY
 } = process.env;
 
 
@@ -59,5 +60,6 @@ module.exports = {
         database: SQL_DATABASE,
         user: SQL_USER,
         password: SQL_PASSWORD,
-    }
+    },
+    SECRET_KEY: SECRET_KEY
 };

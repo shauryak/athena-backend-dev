@@ -684,6 +684,8 @@ module.exports.getBotResponse = function (req, res, next) {
 
   apiaiReq.on('error', (error) => {
     // console.log(error);
+    return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "apiai internal sever error ocuured ", "response": null }))
+
   });
 
   apiaiReq.end();

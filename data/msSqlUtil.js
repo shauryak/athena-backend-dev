@@ -8,10 +8,18 @@ const serversqlConfig = require('../config/config').serverdb;
 
 // config for your database
 // var config = {
-//    user: 'sa',
-//    password: 'shezar@123',
-//    server: 'DESKTOP-PTAUQID',
-//    database: 'Athena'
+//     //    user: 'sa',
+//     //    password: 'shezar@123',
+//     //    server: 'DESKTOP-PTAUQID',
+//     //    database: 'Athena'
+
+//     // user: 'sa',
+//     // password: 'shezar123',
+//     // server: 'LAPTOP-UUFPIKIK',
+//     // database: 'Athena',
+//     // options: {
+//     //     instanceName: 'MSSQLSERVER1'
+//     // }
 
 //     //  user: 'iic_aditya',
 //     //  password: 'aditya@123',
@@ -19,7 +27,7 @@ const serversqlConfig = require('../config/config').serverdb;
 //     //  database: 'BOT' 
 // };
 
-var config = localsqlConfig;
+ var config = serversqlConfig;
 
 //connect to your database
 

@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
+// var globalTunnel = require('global-tunnel-ng');
 
 //var sql = require('./data/msSqlUtil');
 // global.con = require('./data/mysqlUtil')
@@ -44,6 +45,13 @@ var upload = multer({
 
 
 app.set('port', process.env.port || 3000);
+
+// globalTunnel.initialize({
+//   host: '10.2.152.211',
+//   port: 80,
+//   proxyAuth: 'IIC_ATHENA:mahindra@123', // optional authentication
+//   sockets: 50 // optional pool size for each http and https
+// });
 
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
