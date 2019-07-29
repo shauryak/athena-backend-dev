@@ -327,7 +327,6 @@ module.exports.getBotResponse = function (req, res, next) {
         if (followup.company) company = followup.company;
       }
 
-
       if (paramteresJson.Dynamic_filter) {
         var Dynamic_filter = paramteresJson.Dynamic_filter;
         if (Dynamic_filter.kpi_name && Dynamic_filter.kpi_name.kpi_name) entity1 = Dynamic_filter.kpi_name.kpi_name;
@@ -338,8 +337,6 @@ module.exports.getBotResponse = function (req, res, next) {
         if (Dynamic_filter.greaterthan_lessthan) operator = Dynamic_filter.greaterthan_lessthan;
         if (Dynamic_filter.greaterthan_lessthan1) operator1 = Dynamic_filter.greaterthan_lessthan1;
       }
-
-
 
       if (paramteresJson.Dimension) {
         var Dimension = paramteresJson.Dimension;
@@ -497,6 +494,7 @@ module.exports.getBotResponse = function (req, res, next) {
     // if (operator1) json.operator1 = operator1;
 
     var json = {
+      "userId":userId,
       "question": text,
       "entity0": entity0,
       "entity1": entity1,
