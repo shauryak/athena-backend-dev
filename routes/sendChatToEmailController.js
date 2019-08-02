@@ -92,7 +92,7 @@ module.exports.sendConversationHistoryToEmail = function (req, res, next) {
 
           if (error) {
             //  console.log(error);
-            res.status(500).send(JSON.stringify({ "statusCode": 500, "error": error, "response": "Issues in smtp server" }));
+            res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request", "response": "Issues in smtp server" }));
 
           } else {
             // console.log('Email sent: ' + info.response);

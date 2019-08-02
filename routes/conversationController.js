@@ -602,7 +602,7 @@ module.exports.getBotResponse = function (req, res, next) {
             }
           }
           else {
-            return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": error, "response": null }))
+            return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request", "response": null }))
           }
 
         });

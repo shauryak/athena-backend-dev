@@ -58,7 +58,7 @@ module.exports.postConversationHistory = function (req, res) {
   con.query("SELECT user_query,bot_response,created_date FROM `chat_history` WHERE employee_id = ? and created_date between ? and ? limit ? , ? ", [userId, startDate, endDate, limit, offset], function (err, rows, fields) {
 
     if (err) {
-      return res.send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
+      return res.send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request", "response": null }));
     }
 
     res.send(JSON.stringify({ "statusCode": 200, "error": null, "response": { "totalRecords": rows.length, "responseBody": rows } }));
