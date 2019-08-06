@@ -3,6 +3,8 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
+var https = require('https');
+var fs = require('fs');
 // var globalTunnel = require('global-tunnel-ng');
 
 //var sql = require('./data/msSqlUtil');
@@ -13,6 +15,13 @@ const apiRoute = require('./routes/apiRoute')
 
 var multer = require('multer');
 const path = require('path');
+
+var options = {
+  key: fs.readFileSync('certificate/wildcard08.key'),
+  cert: fs.readFileSync('certificate/wildcard08.crt'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
 
 var upload = multer({
   fileFilter: function (req, file, callback) {
@@ -83,8 +92,13 @@ app.post('/profile', function (req, res) {
 });
 
 
-const server = app.listen(app.get('port'), () => {
+// const server = app.listen(app.get('port'), () => {
+//   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
+// });
+
+const server = https.createServer(options,app).listen(app.get('port'),function () {
   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
-});
+
+ });
 
 module.exports = app;

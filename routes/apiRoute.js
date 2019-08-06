@@ -61,11 +61,11 @@ app.use(function (req, res, next) {
 
 router.use(bodyParser.json());
 
-// router.get('/', (req, res) => {
-//     res.send('welcome to api route');
-// })
+router.get('/', (req, res) => {
+    res.send('welcome to api route');
+})
 
-router.all('*',verifyToken.verifyToken);
+// router.all('*',verifyToken.verifyToken);
 
 router.route('/getconversationhistory')
     .get(chatHistoryController.getConversationHistory)
