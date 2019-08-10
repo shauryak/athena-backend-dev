@@ -16,8 +16,10 @@ const baseUrl = require('../constants/baseUrl').BASE_URL;
 
 module.exports.getBotResponse = function (req, res, next) {
 
-  if (!req.query.userId) return res.status(400).send("userId cannot be empty");
-  if (!req.query.q) return res.status(400).send("user query q cannot be empty");
+  // if (!req.query.userId) return res.status(400).send("userId cannot be empty");
+  // if (!req.query.q) return res.status(400).send("user query q cannot be empty");
+  if (!req.body.userId) return res.status(400).send("userId cannot be empty");
+  if (!req.body.q) return res.status(400).send("user query q cannot be empty");
   const userId = req.query.userId;
   const text = req.query.q;
 
@@ -43,7 +45,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     }
 
-    //  console.log(paramteresJson);
+    // console.log(paramteresJson);
 
     let entity0 = "",
       entity1 = "",
@@ -116,7 +118,6 @@ module.exports.getBotResponse = function (req, res, next) {
     var json = {};
 
     if (paramteresJson) {
-
       if (paramteresJson.kpi_name) {
         entity1 = paramteresJson.kpi_name;
         if (paramteresJson.kpi_name.kpi_name) entity1 = paramteresJson.kpi_name.kpi_name;
@@ -140,102 +141,95 @@ module.exports.getBotResponse = function (req, res, next) {
       if (paramteresJson.versus) {
         let versusfilterValue = paramteresJson.versus;
         let versusFilter = "";
-        if(versusfilterValue.compare_value && versusfilterValue.compare_value1){
-         
+        if (versusfilterValue.compare_value && versusfilterValue.compare_value1) {
           let comparefilterValue = versusfilterValue.compare_value;
           if (comparefilterValue.Sector) {
             sysNumber = comparefilterValue.Sector;
             versusFilter = "Sector";
           }
-         else if (comparefilterValue.business_unit){
-          sysNumber = comparefilterValue.business_unit;
-          versusFilter = "business_unit";
-         } 
-         else if (comparefilterValue.business_function) {
-          sysNumber = comparefilterValue.business_function;
-          versusFilter = "business_function";
+          else if (comparefilterValue.business_unit) {
+            sysNumber = comparefilterValue.business_unit;
+            versusFilter = "business_unit";
           }
-         else if (comparefilterValue.Sub_division) {
-          sysNumber = comparefilterValue.Sub_division;
-          versusFilter = "Sub_division";
-         }
-         else if (comparefilterValue.Division){
-          sysNumber = comparefilterValue.Division;
-          versusFilter = "Division";
+          else if (comparefilterValue.business_function) {
+            sysNumber = comparefilterValue.business_function;
+            versusFilter = "business_function";
           }
-         else if (comparefilterValue.Band){
-          sysNumber = comparefilterValue.Band;
-          versusFilter = "Band";
+          else if (comparefilterValue.Sub_division) {
+            sysNumber = comparefilterValue.Sub_division;
+            versusFilter = "Sub_division";
           }
-         else if (comparefilterValue.Employee_Group){
-          sysNumber = comparefilterValue.Employee_Group;
-          versusFilter = "Employee_Group";
+          else if (comparefilterValue.Division) {
+            sysNumber = comparefilterValue.Division;
+            versusFilter = "Division";
           }
-         else if (comparefilterValue.employee_grade) {
-          sysNumber = comparefilterValue.employee_grade;
-          versusFilter = "employee_grade";
+          else if (comparefilterValue.Band) {
+            sysNumber = comparefilterValue.Band;
+            versusFilter = "Band";
           }
-         else if (comparefilterValue.age_group) {
-          sysNumber = comparefilterValue.age_group;
-          versusFilter = "age_group";
-         }
-         else if (comparefilterValue.domain_type) {
-          sysNumber = comparefilterValue.domain_type;
-          versusFilter = "domain_type";
+          else if (comparefilterValue.Employee_Group) {
+            sysNumber = comparefilterValue.Employee_Group;
+            versusFilter = "Employee_Group";
           }
-         else if (comparefilterValue.Gender) {
-           sysNumber = comparefilterValue.Gender;
-           versusFilter = "Gender";
+          else if (comparefilterValue.employee_grade) {
+            sysNumber = comparefilterValue.employee_grade;
+            versusFilter = "employee_grade";
           }
-         else if (comparefilterValue.Year) {
-           sysNumber = comparefilterValue.Year;
-           versusFilter = "Year";
+          else if (comparefilterValue.age_group) {
+            sysNumber = comparefilterValue.age_group;
+            versusFilter = "age_group";
           }
-         else if (comparefilterValue["date-period"]) {
-           sysNumber = comparefilterValue["date-period"];
-           versusFilter = "date-period";
+          else if (comparefilterValue.domain_type) {
+            sysNumber = comparefilterValue.domain_type;
+            versusFilter = "domain_type";
           }
-         else if (comparefilterValue.number) {
-           sysNumber = comparefilterValue.number;
-           versusFilter = "number";
+          else if (comparefilterValue.Gender) {
+            sysNumber = comparefilterValue.Gender;
+            versusFilter = "Gender";
           }
-         else if (comparefilterValue.Department) {
-           sysNumber = comparefilterValue.Department;
-           versusFilter = "Department";
+          else if (comparefilterValue.Year) {
+            sysNumber = comparefilterValue.Year;
+            versusFilter = "Year";
           }
-         else if (comparefilterValue.Sub_department) {
-           sysNumber = comparefilterValue.Sub_department;
-           versusFilter = "Sub_department";
+          else if (comparefilterValue["date-period"]) {
+            sysNumber = comparefilterValue["date-period"];
+            versusFilter = "date-period";
           }
-         else if (comparefilterValue.company) {
-           sysNumber = comparefilterValue.company;
-           versusFilter = "company";
+          else if (comparefilterValue.number) {
+            sysNumber = comparefilterValue.number;
+            versusFilter = "number";
           }
-         
-          let comparefilterValue1 = versusfilterValue.compare_value1;
+          else if (comparefilterValue.Department) {
+            sysNumber = comparefilterValue.Department;
+            versusFilter = "Department";
+          }
+          else if (comparefilterValue.Sub_department) {
+            sysNumber = comparefilterValue.Sub_department;
+            versusFilter = "Sub_department";
+          }
+          else if (comparefilterValue.company) {
+            sysNumber = comparefilterValue.company;
+            versusFilter = "company";
+          }
 
+          let comparefilterValue1 = versusfilterValue.compare_value1;
           if (comparefilterValue1[versusFilter]) {
             sysNumber1 = comparefilterValue1[versusFilter];
           }
-
           compare = compare1 = filter = versusFilter;
           groupBy = "group_by";
           versus = "versus";
         }
-      
-      
       }
 
       if (paramteresJson.value_needed) {
         let value_needed = paramteresJson.value_needed;
         if (value_needed.filter) filter = value_needed.filter;
         if (value_needed.duration_type) typeDuration = value_needed.duration_type;
-
       }
       if (paramteresJson.top_bottom) entity4 = paramteresJson.top_bottom;
       if (paramteresJson.FollowupByDimensions && paramteresJson.FollowupByDimensions.filter) filter = paramteresJson.FollowupByDimensions.filter;
       if (paramteresJson.FollowupByDimensions && paramteresJson.FollowupByDimensions.duration_type) typeDuration = paramteresJson.FollowupByDimensions.duration_type;
-
 
       if (paramteresJson.Dynamic_filter_group_by) {
         var dynamicFilter = paramteresJson.Dynamic_filter_group_by;
@@ -243,10 +237,9 @@ module.exports.getBotResponse = function (req, res, next) {
           entity1 = dynamicFilter.KPI_name;
           if (dynamicFilter.KPI_name.kpi_name) entity1 = dynamicFilter.KPI_name.kpi_name;
         }
-
         if (dynamicFilter.Group_by) groupBy = dynamicFilter.Group_by;
-        if(dynamicFilter.value1){
-          if(dynamicFilter.value1.filter) filter1 = dynamicFilter.value1.filter;
+        if (dynamicFilter.value1) {
+          if (dynamicFilter.value1.filter) filter1 = dynamicFilter.value1.filter;
         }
         if (dynamicFilter.value) {
           var dynamicFilterValue = dynamicFilter.value;
@@ -255,7 +248,6 @@ module.exports.getBotResponse = function (req, res, next) {
           if (dynamicFilterValue.kpi_name) filter = dynamicFilterValue.kpi_name;
           if (dynamicFilterValue.duration_type) typeDuration = dynamicFilterValue.duration_type;
           if (dynamicFilterValue.yoy_true) yoy = dynamicFilterValue.yoy_true;
-
           if (dynamicFilterValue["FollowupWhereFilter"]) {
             let followupdynamicfilterValue = dynamicFilterValue["FollowupWhereFilter"];
             if (followupdynamicfilterValue.Sector) sector = followupdynamicfilterValue.Sector;
@@ -276,13 +268,10 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupdynamicfilterValue.Sub - department) subDepartment = followupdynamicfilterValue.Sub - department;
             if (followupdynamicfilterValue.company) company = followupdynamicfilterValue.company;
           }
-
         }
-
 
         if (dynamicFilter.FollowupWhereFilter) {
           let followup = dynamicFilter.FollowupWhereFilter;
-
           if (followup.Sector) sector = followup.Sector;
           if (followup.business_unit) businessUnit = followup.business_unit;
           if (followup.business_function) businessFunction = followup.business_function;
@@ -301,13 +290,10 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followup.Sub - department) subDepartment = followup.Sub - department;
           if (followup.company) company = followup.company;
         }
-
       }
-
 
       if (paramteresJson.FollowupWhereFilter) {
         var followup = paramteresJson.FollowupWhereFilter;
-
         if (followup.Sector) sector = followup.Sector;
         if (followup.business_unit) businessUnit = followup.business_unit;
         if (followup.business_function) businessFunction = followup.business_function;
@@ -360,12 +346,10 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followupwherefilter["date-period"]) date = followupwherefilter["date-period"];
           if (followupwherefilter.number) sysNumber = followupwherefilter.number;
           if (followupwherefilter.Department) department = followupwherefilter.Department;
-          if (followupwherefilter.Sub - department) subDepartment = followupwherefilter.Sub - department;
+          if (followupwherefilter.Sub-department) subDepartment = followupwherefilter.Sub-department;
           if (followupwherefilter.company) company = followupwherefilter.company;
-
           if (Dimension.FollowupWhereFilter1) {
             var followupwherefilter1 = Dimension.FollowupWhereFilter1;
-
             if (followupwherefilter1.Sector) sector = followupwherefilter1.Sector;
             if (followupwherefilter1.business_unit) businessUnit = followupwherefilter1.business_unit;
             if (followupwherefilter1.business_function) businessFunction = followupwherefilter1.business_function;
@@ -381,13 +365,12 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter1["date-period"]) date = followupwherefilter1["date-period"];
             if (followupwherefilter1.number) sysNumber = followupwherefilter1.number;
             if (followupwherefilter1.Department) department = followupwherefilter1.Department;
-            if (followupwherefilter1.Sub - department) subDepartment = followupwherefilter1.Sub - department;
+            if (followupwherefilter1.Sub-department) subDepartment = followupwherefilter1.Sub-department;
             if (followupwherefilter1.company) company = followupwherefilter1.company;
           }
 
           if (Dimension.FollowupWhereFilter2) {
             var followupwherefilter2 = Dimension.FollowupWhereFilter2;
-
             if (followupwherefilter2.Sector) sector = followupwherefilter2.Sector;
             if (followupwherefilter2.business_unit) businessUnit = followupwherefilter2.business_unit;
             if (followupwherefilter2.business_function) businessFunction = followupwherefilter2.business_function;
@@ -406,9 +389,7 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter2.Sub-department) subDepartment = followupwherefilter2.Sub-department;
             if (followupwherefilter2.company) company = followupwherefilter2.company;
           }
-
         }
-
       }
 
       if (date.length > 10) {
@@ -438,12 +419,16 @@ module.exports.getBotResponse = function (req, res, next) {
             endDate = paramteresJson["date-period"].endDate;
           }
         }
-
       }
 
       if (!paramteresJson["date-period"] && year) {
         date = year;
       }
+
+      if (entity4 && (entity3 === "MIN" || entity3 === "MAX")) {
+        entity3 = "";
+      }
+
     }
 
     // if (text) json.question = text;
@@ -494,14 +479,14 @@ module.exports.getBotResponse = function (req, res, next) {
     // if (operator1) json.operator1 = operator1;
 
     var json = {
-      "userId":userId,
+      "userId": userId,
       "question": text,
       "entity0": entity0,
       "entity1": entity1,
       "entity2": entity2,
       "entity3": entity3,
       "filter": filter,
-      "filter1":filter1,
+      "filter1": filter1,
       "entity4": entity4,
       // "entity5" : entity5,
       "sector": sector,
@@ -543,14 +528,14 @@ module.exports.getBotResponse = function (req, res, next) {
       "compare1": compare1,
       "sysNumber1": sysNumber1,
       "operator1": operator1,
-      "versus" : versus
+      "versus": versus
 
       // "employeeGroup1": employeeGroup1,
       // "employeeGroup2": employeeGroup2
 
     };
 
-  //  console.log("DL model request body is " + JSON.stringify(json, null, 4));
+    // console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 

@@ -50,9 +50,6 @@ var upload = multer({
 //  var upload = multer({ storage: storage });
 
 
-
-
-
 app.set('port', process.env.port || 3000);
 
 // globalTunnel.initialize({
@@ -62,6 +59,7 @@ app.set('port', process.env.port || 3000);
 //   sockets: 50 // optional pool size for each http and https
 // });
 
+app.disable('x-powered-by');
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
 app.use(helmet.frameguard({ action: 'sameorigin' }));
@@ -91,14 +89,12 @@ app.post('/profile', function (req, res) {
   })
 });
 
-
-// const server = app.listen(app.get('port'), () => {
-//   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
-// });
-
-const server = https.createServer(options,app).listen(app.get('port'),function () {
+const server = app.listen(app.get('port'), () => {
   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
+});
 
- });
+// const server = https.createServer(options,app).listen(app.get('port'),function () {
+//   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
+//  });
 
 module.exports = app;
