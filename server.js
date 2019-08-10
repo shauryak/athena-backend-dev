@@ -64,6 +64,10 @@ app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 app.use(helmet.noSniff());
+app.use(helmet.hsts({
+  maxAge: 15552000,  // 180 days in seconds
+  includeSubDomains: false
+}));
 app.use(cookieParser());
 //app.use(logger('dev'));
 app.use('/api', apiRoute);
