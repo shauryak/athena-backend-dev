@@ -87,14 +87,17 @@ app.set('port', process.env.port || 3000);
 //   sockets: 50 // optional pool size for each http and https
 // });
 
+const ONE_YEAR  = 31536000000;
+
 app.disable('x-powered-by');
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 app.use(helmet.noSniff());
 app.use(helmet.hsts({
-  maxAge: 15552000,  // 180 days in seconds
-  includeSubDomains: false
+  maxAge: ONE_YEAR, 
+  includeSubDomains: true,
+  force : true
 }));
 app.use(cookieParser());
 //app.use(logger('dev'));
