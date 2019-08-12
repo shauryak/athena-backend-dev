@@ -3,6 +3,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const helmet = require('helmet');
+const { constants } = require('crypto')
 var https = require('https');
 var fs = require('fs');
 // var globalTunnel = require('global-tunnel-ng');
@@ -16,40 +17,33 @@ const apiRoute = require('./routes/apiRoute')
 var multer = require('multer');
 const path = require('path');
 
-// var options = {
-//   key: fs.readFileSync('certificate/wildcard08.key'),
-//   cert: fs.readFileSync('certificate/wildcard08.crt'),
-//   requestCert: false,
-//   rejectUnauthorized: false
-// };
-
-var options ={
-    secureProtocol: 'TLSv1_2_server_method',
-    key: fs.readFileSync('certificate/wildcard08.key'),
-    cert: fs.readFileSync('certificate/wildcard08.crt'),
-    ca:  fs.readFileSync('certificate/Intermediate.crt'),
-    ciphers: [
-          "!EDH",
-          "ECDHE-ECDSA-AES256-GCM-SHA384",
-          "ECDHE-ECDSA-AES128-GCM-SHA256",
-          "ECDHE-RSA-AES256-GCM-SHA384",
-          "ECDHE-RSA-AES128-GCM-SHA256",
-          "DHE-RSA-AES256-GCM-SHA384",
-          "DHE-RSA-AES128-GCM-SHA256",
-          "AESGCM",
-          "!aNULL",
-          "!eNULL",
-          "!EXPORT",
-          "!RC4",
-          "!MD5",
-          "!PSK",
-          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
-          "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
-          "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
-    ].join(':'),
-    requestCert: false,
-    rejectUnauthorized: false
-  };
+var options = {
+  secureProtocol: 'TLSv1_2_server_method',
+  key: fs.readFileSync('certificate/wildcard08.key'),
+  cert: fs.readFileSync('certificate/wildcard08.crt'),
+  ca:  fs.readFileSync('certificate/Intermediate.crt'),
+  ciphers: [
+	"!EDH",
+	"ECDHE-ECDSA-AES256-GCM-SHA384",
+	"ECDHE-ECDSA-AES128-GCM-SHA256",
+	"ECDHE-RSA-AES256-GCM-SHA384",
+	"ECDHE-RSA-AES128-GCM-SHA256",
+	"DHE-RSA-AES256-GCM-SHA384",
+	"DHE-RSA-AES128-GCM-SHA256",
+	"AESGCM",
+	"!aNULL",
+	"!eNULL",
+	"!EXPORT",
+	"!RC4",
+	"!MD5",
+	"!PSK",
+	"TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+	"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+	"TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
+  ].join(':'),
+  requestCert: false,
+  rejectUnauthorized: false
+};
 
 var upload = multer({
   fileFilter: function (req, file, callback) {
@@ -66,6 +60,7 @@ var upload = multer({
 
 
 
+
 // var storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
 //       cb(null, './public/uploads')
@@ -78,6 +73,9 @@ var upload = multer({
 //  var upload = multer({ storage: storage });
 
 
+
+
+
 app.set('port', process.env.port || 3000);
 
 // globalTunnel.initialize({
@@ -87,19 +85,17 @@ app.set('port', process.env.port || 3000);
 //   sockets: 50 // optional pool size for each http and https
 // });
 
-const ONE_YEAR  = 31536000000;
-
-app.disable('x-powered-by');
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
 app.use(helmet.frameguard({ action: 'sameorigin' }));
 app.use(helmet.noSniff());
-app.use(helmet.hsts({
-  maxAge: ONE_YEAR, 
-  includeSubDomains: true,
-  force : true
-}));
 app.use(cookieParser());
+var ONE_YEAR = 31536000000;
+app.use(helmet.hsts({
+    maxAge: ONE_YEAR,
+    includeSubdomains: true,
+    force: true
+}));
 //app.use(logger('dev'));
 app.use('/api', apiRoute);
 
@@ -124,12 +120,14 @@ app.post('/profile', function (req, res) {
   })
 });
 
+
 // const server = app.listen(app.get('port'), () => {
 //   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
 // });
 
 const server = https.createServer(options,app).listen(app.get('port'),function () {
   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
+
  });
 
 module.exports = app;
