@@ -65,7 +65,7 @@ router.use(bodyParser.json());
 //     res.send('welcome to api route');
 // })
 
-//  router.all('*',verifyToken.verifyToken);
+ router.all('*',verifyToken.verifyToken);
 
 router.route('/getconversationhistory')
     .get(chatHistoryController.getConversationHistory)
@@ -79,7 +79,7 @@ router.route('/conversationhistory')
     .post(conversationHistoryController.postConversationHistory);
 
 router.route('/conversation')
-    .post(conversationController.getBotResponse);
+    .get(conversationController.getBotResponse);
 
 router.route('/sendemail')
     .post(sendChatToEmailController.sendConversationHistoryToEmail);

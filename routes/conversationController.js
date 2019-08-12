@@ -16,10 +16,10 @@ const baseUrl = require('../constants/baseUrl').BASE_URL;
 
 module.exports.getBotResponse = function (req, res, next) {
 
-  // if (!req.query.userId) return res.status(400).send("userId cannot be empty");
-  // if (!req.query.q) return res.status(400).send("user query q cannot be empty");
-  if (!req.body.userId) return res.status(400).send("userId cannot be empty");
-  if (!req.body.q) return res.status(400).send("user query q cannot be empty");
+  if (!req.query.userId) return res.status(400).send("userId cannot be empty");
+  if (!req.query.q) return res.status(400).send("user query q cannot be empty");
+  // if (!req.body.userId) return res.status(400).send("userId cannot be empty");
+  // if (!req.body.q) return res.status(400).send("user query q cannot be empty");
   const userId = req.query.userId;
   const text = req.query.q;
 
