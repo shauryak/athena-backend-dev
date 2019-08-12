@@ -93,12 +93,12 @@ app.post('/profile', function (req, res) {
   })
 });
 
-const server = app.listen(app.get('port'), () => {
-  console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
-});
-
-// const server = https.createServer(options,app).listen(app.get('port'),function () {
+// const server = app.listen(app.get('port'), () => {
 //   console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
-//  });
+// });
+
+const server = https.createServer(options,app).listen(app.get('port'),function () {
+  console.log('Express server listening on port %d in %s mode', server.address().port, config.environment);
+ });
 
 module.exports = app;
