@@ -16,12 +16,40 @@ const apiRoute = require('./routes/apiRoute')
 var multer = require('multer');
 const path = require('path');
 
-var options = {
-  key: fs.readFileSync('certificate/wildcard08.key'),
-  cert: fs.readFileSync('certificate/wildcard08.crt'),
-  requestCert: false,
-  rejectUnauthorized: false
-};
+// var options = {
+//   key: fs.readFileSync('certificate/wildcard08.key'),
+//   cert: fs.readFileSync('certificate/wildcard08.crt'),
+//   requestCert: false,
+//   rejectUnauthorized: false
+// };
+
+var options ={
+    secureProtocol: 'TLSv1_2_server_method',
+    key: fs.readFileSync('certificate/wildcard08.key'),
+    cert: fs.readFileSync('certificate/wildcard08.crt'),
+    ca:  fs.readFileSync('certificate/Intermediate.crt'),
+    ciphers: [
+          "!EDH",
+          "ECDHE-ECDSA-AES256-GCM-SHA384",
+          "ECDHE-ECDSA-AES128-GCM-SHA256",
+          "ECDHE-RSA-AES256-GCM-SHA384",
+          "ECDHE-RSA-AES128-GCM-SHA256",
+          "DHE-RSA-AES256-GCM-SHA384",
+          "DHE-RSA-AES128-GCM-SHA256",
+          "AESGCM",
+          "!aNULL",
+          "!eNULL",
+          "!EXPORT",
+          "!RC4",
+          "!MD5",
+          "!PSK",
+          "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+          "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
+          "TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
+    ].join(':'),
+    requestCert: false,
+    rejectUnauthorized: false
+  };
 
 var upload = multer({
   fileFilter: function (req, file, callback) {
