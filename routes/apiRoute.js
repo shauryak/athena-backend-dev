@@ -79,7 +79,7 @@ router.route('/conversationhistory')
     .post(conversationHistoryController.postConversationHistory);
 
 router.route('/conversation')
-    .get(conversationController.getBotResponse);
+    .post(conversationController.getBotResponse);
 
 router.route('/sendemail')
     .post(sendChatToEmailController.sendConversationHistoryToEmail);
