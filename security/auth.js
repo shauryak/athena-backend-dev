@@ -16,7 +16,7 @@ module.exports.verifyToken = function (req, res, next) {
     let token = req.headers.authorization;
     if (!token) return res.status(401).send("Unauthorized");
     if (!userId) return res.status(400).send("userId cannot be empty");
-
+    
     // var encoded = userId + SECRET_KEY;
     // var encodeData = base64.encode(encoded);
     // if (encodeData !== token) return res.status(401).send("Unauthorized");
@@ -24,7 +24,14 @@ module.exports.verifyToken = function (req, res, next) {
     // var decryptedUserId = aes256.decrypt(SECRET_KEY, token);
     // if (decryptedUserId != userId) return res.status(401).send("Unauthorized");
     
-     var decryptedUserId = decrypt(token);
+    let decryptedUserId
+    try{
+         decryptedUserId = decrypt(token);
+    }
+    catch(exc){
+        return res.status(401).send("Unauthorized");
+    }
+
     if (decryptedUserId != userId) return res.status(401).send("Unauthorized");
      
     next();
