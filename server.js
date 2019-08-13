@@ -93,7 +93,7 @@ app.use(cookieParser());
 var ONE_YEAR = 31536000000;
 app.use(helmet.hsts({
     maxAge: ONE_YEAR,
-    includeSubdomains: true,
+    includeSubDomains: true,
     force: true
 }));
 //app.use(logger('dev'));

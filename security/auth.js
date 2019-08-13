@@ -4,6 +4,7 @@ const aes256 = require('aes256');
 
 // const secretKey = "secretkeyofathena123";
 const { SECRET_KEY } = require('../config/config');
+var {decrypt} = require('./aes');
 
 module.exports.verifyToken = function (req, res, next) {
     
@@ -13,7 +14,6 @@ module.exports.verifyToken = function (req, res, next) {
     // if (url_parts.query && url_parts.query.token) token = url_parts.query.token;
     // let token = req.get('authorization');
     let token = req.headers.authorization;
-   
     if (!token) return res.status(401).send("Unauthorized");
     if (!userId) return res.status(400).send("userId cannot be empty");
 
@@ -21,7 +21,10 @@ module.exports.verifyToken = function (req, res, next) {
     // var encodeData = base64.encode(encoded);
     // if (encodeData !== token) return res.status(401).send("Unauthorized");
 
-    var decryptedUserId = aes256.decrypt(SECRET_KEY, token);
+    // var decryptedUserId = aes256.decrypt(SECRET_KEY, token);
+    // if (decryptedUserId != userId) return res.status(401).send("Unauthorized");
+    
+     var decryptedUserId = decrypt(token);
     if (decryptedUserId != userId) return res.status(401).send("Unauthorized");
      
     next();
