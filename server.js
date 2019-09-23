@@ -41,8 +41,7 @@ var options = {
 	"TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA",
 	"TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA"
   ].join(':'),
-  requestCert: false,
-  rejectUnauthorized: false
+  honorCipherOrder: true
 };
 
 var upload = multer({
@@ -84,7 +83,7 @@ app.set('port', process.env.port || 3000);
 //   proxyAuth: 'IIC_ATHENA:mahindra@123', // optional authentication
 //   sockets: 50 // optional pool size for each http and https
 // });
-
+app.disable('x-powered-by');
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }))
 app.use(helmet.frameguard({ action: 'sameorigin' }));

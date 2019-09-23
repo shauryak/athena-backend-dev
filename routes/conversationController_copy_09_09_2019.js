@@ -111,10 +111,7 @@ module.exports.getBotResponse = function (req, res, next) {
       operator1 = "",
       versus = "",
       common ="",
-      commonType = "",
-      talentCategory = "",
-      rating = "",
-      performanceScore = "";
+      commonType = "";
 
     // console.log(paramteresJson);
 
@@ -125,10 +122,7 @@ module.exports.getBotResponse = function (req, res, next) {
         entity1 = paramteresJson.kpi_name;
         if (paramteresJson.kpi_name.kpi_name) entity1 = paramteresJson.kpi_name.kpi_name;
       }
-      if (paramteresJson.kpi_name1){
-        entity2 = paramteresJson.kpi_name1;
-        if (paramteresJson.kpi_name.kpi_name) entity2 = paramteresJson.kpi_name1.kpi_name;
-      }
+      if (paramteresJson.kpi_name1) entity2 = paramteresJson.kpi_name1;
       if (paramteresJson.Commonly_used_terms) entity3 = paramteresJson.Commonly_used_terms;
       if (paramteresJson.Transfer_flag) transferFlag = paramteresJson.Transfer_flag;
       if (paramteresJson.which) which = paramteresJson.which;
@@ -147,7 +141,6 @@ module.exports.getBotResponse = function (req, res, next) {
       if(paramteresJson.commonType) {
         commonType =  paramteresJson.commonType.filter;
       }
-      if(paramteresJson.common) common = paramteresJson.common;
       if (paramteresJson.Common_among_dimensions){
         let commonValue = paramteresJson.Common_among_dimensions
         if(commonValue.common){
@@ -232,29 +225,11 @@ module.exports.getBotResponse = function (req, res, next) {
           if (comparefilterValue1[versusFilter]) {
             sysNumber1 = comparefilterValue1[versusFilter];
           }
-          compare = compare1 = versusFilter;
+          compare = compare1 = filter = versusFilter;
           groupBy = "group_by";
           versus = "versus";
         }
       }
-      if (paramteresJson.business_unit) businessUnit = paramteresJson.business_unit;
-      if (paramteresJson.business_function) businessFunction = paramteresJson.business_function;
-      if (paramteresJson.Sub_division) subDivision = paramteresJson.Sub_division;
-      if (paramteresJson.Division) division = paramteresJson.Division;
-      if (paramteresJson.Band) band = paramteresJson.Band;
-      if (paramteresJson.Employee_Group) employeeGroup = paramteresJson.Employee_Group;
-      if (paramteresJson.employee_grade) grade = paramteresJson.employee_grade;
-      if (paramteresJson.age_group) ageGroup = paramteresJson.age_group;
-      if (paramteresJson.domain_type) domainType = paramteresJson.domain_type;
-      if (paramteresJson.Gender) gender = paramteresJson.Gender;
-      if (paramteresJson.Year) year = paramteresJson.Year;
-      if (paramteresJson["date-period"]) date = paramteresJson["date-period"];
-      if (paramteresJson.number) sysNumber = paramteresJson.number;
-      if (paramteresJson.Department) department = paramteresJson.Department;
-      if (paramteresJson.Sub - department) subDepartment = paramteresJson.Sub - department;
-      if (paramteresJson.company) company = paramteresJson.company;
-      if (paramteresJson.Talent_Category) talentCategory = paramteresJson.Talent_Category;
-      if (paramteresJson.rating) rating = paramteresJson.rating;    
 
       if (paramteresJson.value_needed) {
         let value_needed = paramteresJson.value_needed;
@@ -273,17 +248,13 @@ module.exports.getBotResponse = function (req, res, next) {
         }
         if (dynamicFilter.Group_by) groupBy = dynamicFilter.Group_by;
         if (dynamicFilter.value1) {
-          var dynamicFilterValue1 = dynamicFilter.value1;
-          if (dynamicFilterValue1.filter) filter1 = dynamicFilterValue1.filter;
-          if (dynamicFilterValue1.kpi_name) filter1 = dynamicFilterValue1.kpi_name.kpi_name;
-          if (dynamicFilterValue1.YOY) yoy = dynamicFilterValue1.YOY;
-          if (dynamicFilterValue1.duration_type) typeDuration = dynamicFilterValue1.duration_type;
+          if (dynamicFilter.value1.filter) filter1 = dynamicFilter.value1.filter;
         }
         if (dynamicFilter.value) {
           var dynamicFilterValue = dynamicFilter.value;
           if (dynamicFilterValue.filter) filter = dynamicFilterValue.filter;
           if (dynamicFilterValue.YOY) yoy = dynamicFilterValue.YOY;
-          if (dynamicFilterValue.kpi_name) filter = dynamicFilterValue.kpi_name.kpi_name;
+          if (dynamicFilterValue.kpi_name) filter = dynamicFilterValue.kpi_name;
           if (dynamicFilterValue.duration_type) typeDuration = dynamicFilterValue.duration_type;
           if (dynamicFilterValue.yoy_true) yoy = dynamicFilterValue.yoy_true;
           if (dynamicFilterValue["FollowupWhereFilter"]) {
@@ -305,8 +276,6 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupdynamicfilterValue.Department) department = followupdynamicfilterValue.Department;
             if (followupdynamicfilterValue.Sub - department) subDepartment = followupdynamicfilterValue.Sub - department;
             if (followupdynamicfilterValue.company) company = followupdynamicfilterValue.company;
-            if (followupdynamicfilterValue.Talent_Category) talentCategory = followupdynamicfilterValue.Talent_Category;
-            if (followupdynamicfilterValue.rating) rating = followupdynamicfilterValue.rating;
           }
         }
 
@@ -329,8 +298,6 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followup.Department) department = followup.Department;
           if (followup.Sub - department) subDepartment = followup.Sub - department;
           if (followup.company) company = followup.company;
-          if (followup.Talent_Category) talentCategory = followup.Talent_Category;
-          if (followup.rating) rating = followup.rating;
         }
       }
 
@@ -353,8 +320,6 @@ module.exports.getBotResponse = function (req, res, next) {
         if (followup.Department) department = followup.Department;
         if (followup.Sub - department) subDepartment = followup.Sub - department;
         if (followup.company) company = followup.company;
-        if (followup.Talent_Category) talentCategory = followup.Talent_Category;
-        if (followup.rating) rating = followup.rating;
       }
 
       if (paramteresJson.Dynamic_filter) {
@@ -392,8 +357,6 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followupwherefilter.Department) department = followupwherefilter.Department;
           if (followupwherefilter.Sub-department) subDepartment = followupwherefilter.Sub-department;
           if (followupwherefilter.company) company = followupwherefilter.company;
-          if (followupwherefilter.Talent_Category) talentCategory = followupwherefilter.Talent_Category;
-          if (followupwherefilter.rating) rating = followupwherefilter.rating;
           if (Dimension.FollowupWhereFilter1) {
             var followupwherefilter1 = Dimension.FollowupWhereFilter1;
             if (followupwherefilter1.Sector) sector = followupwherefilter1.Sector;
@@ -413,8 +376,6 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter1.Department) department = followupwherefilter1.Department;
             if (followupwherefilter1.Sub-department) subDepartment = followupwherefilter1.Sub-department;
             if (followupwherefilter1.company) company = followupwherefilter1.company;
-            if (followupwherefilter1.Talent_Category) talentCategory = followupwherefilter1.Talent_Category;
-            if (followupwherefilter1.rating) rating = followupwherefilter1.rating;
           }
 
           if (Dimension.FollowupWhereFilter2) {
@@ -436,8 +397,6 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter2.Department) department = followupwherefilter2.Department;
             if (followupwherefilter2.Sub-department) subDepartment = followupwherefilter2.Sub-department;
             if (followupwherefilter2.company) company = followupwherefilter2.company;
-            if (followupwherefilter2.Talent_Category) talentCategory = followupwherefilter2.Talent_Category;
-            if (followupwherefilter2.rating) rating = followupwherefilter2.rating;
           }
         }
       }
@@ -580,17 +539,14 @@ module.exports.getBotResponse = function (req, res, next) {
       "operator1": operator1,
       "versus": versus,
       "common":common,
-      "commonType":commonType,
-      "talentCategory": talentCategory,
-      "performanceScore": performanceScore,
-      "rating":rating
+      "commonType":commonType
 
       // "employeeGroup1": employeeGroup1,
       // "employeeGroup2": employeeGroup2
 
     };
 
-//    console.log("DL model request body is " + JSON.stringify(json, null, 4));
+    // console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 
