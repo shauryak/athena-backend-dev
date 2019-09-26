@@ -25,7 +25,7 @@ module.exports.getBotResponse = function (req, res, next) {
   if (!req.body.q) return res.status(400).send("user query q cannot be empty");
   const userId = (String)(req.body.userId);
   const text = req.body.q;
- 
+
   let apiaiReq = apiai.textRequest(text, {
     sessionId: userId
   });
@@ -49,77 +49,62 @@ module.exports.getBotResponse = function (req, res, next) {
 
     // console.log(paramteresJson);
 
-    let entity0 = "",
-      entity1 = "",
-      entity2 = "",
-      entity3 = "",
-      entity4 = "",
-      entity5 = "",
-      sector = "",
-      businessUnit = "",
-      division = "",
-      subDivision = "",
-      department = "",
-      subDepartment = "",
-      company = "",
-      grade = "",
-      level = "",
-      year = "",
-      domainType = "",
-      gender = "",
-      ageGroup = "",
-      startDate = "",
-      endDate = "",
-      listSort = "",
-      groupBy = "",
-      tenureGroup = "",
-      month = "",
-      employeeGroup = "",
-      spanOfControl = "",
-      date = "",
-      filter = "",
-      filter1 = "",
-      typeDuration = "",
-      operator = "",
-      sysNumber = "",
-      yoy = "",
-      percentage = "",
-      overallAFStransfer = "",
-      difference = "",
-      which = "",
-      Year = "",
-      kpi_transfers = "",
-      kpi_transfers1 = "",
-      headcountgrowthKPI = "",
-      businessFunction = "",
-      transferFlag = "",
-      common_others_bf = "",
-      band = "",
-      Group_by2 = "",
-      kpi_attrition = "",
-      employeeGroup1 = "",
-      employeeGroup2 = "",
-      age = "",
-      tenure = "",
-      sizeOfTeam = "",
-      differenceTransfers = "",
-      maximumPerformers = "",
-      timeLevel = "",
-      compare = "",
-      compare1 = "",
-      sysNumber1 = "",
-      operator1 = "",
-      versus = "",
-      common ="",
-      commonType = "",
-      talentCategory = "",
-      rating = "",
-      performanceScore = "";
+    let entity1 = "",
+        entity2 = "",
+        entity3 = "",
+        entity4 = "",
+        filter = "",
+        filter1 = [],
+        sector = [],
+        businessUnit = [],
+        division = [],
+        subDivision = [],
+        department = [],
+        subDepartment = [],
+        businessFunction = [],
+        company = [],
+        grade = [],
+        domainType = [],
+        gender = [],
+        ageGroup = [],
+        band = [],
+        talentCategory = [],
+        rating = [],
+        performanceScore = [],
+        employeeGroup = [],
+        spanOfControl = [],
+        tenureGroup = [],
+        age = [],
+        tenure = [],
+        Year = "",
+        year = "",
+        startDate = "",
+        transferFlag = "",
+        endDate = "",
+        listSort = "",
+        groupBy = "",
+        month = "",
+        date = "",
+        typeDuration = "",
+        operator = "",
+        sysNumber = "",
+        yoy = "",
+        percentage = "",
+        overallAFStransfer = "",
+        difference = "",
+        which = "",
+        sizeOfTeam = "",
+        differenceTransfers = "",
+        compare = "",
+        compare1 = "",
+        sysNumber1 = "",
+        operator1 = "",
+        versus = "",
+        common ="",
+        commonType = "";
 
     // console.log(paramteresJson);
-
     var json = {};
-
     if (paramteresJson) {
       if (paramteresJson.kpi_name) {
         entity1 = paramteresJson.kpi_name;
@@ -227,34 +212,47 @@ module.exports.getBotResponse = function (req, res, next) {
             sysNumber = comparefilterValue.company;
             versusFilter = "company";
           }
+          else if (comparefilterValue.Talent_Category) {
+            sysNumber = comparefilterValue.Talent_Category;
+            versusFilter = "talentCategory";
+          }
+          else if (comparefilterValue.rating) {
+            sysNumber = comparefilterValue.rating;
+            versusFilter = "rating";
+          }
 
           let comparefilterValue1 = versusfilterValue.compare_value1;
           if (comparefilterValue1[versusFilter]) {
             sysNumber1 = comparefilterValue1[versusFilter];
+          }
+          else if(versusFilter == "talentCategory"){
+          sysNumber1 = comparefilterValue1["Talent_Category"];
           }
           compare = compare1 = versusFilter;
           groupBy = "group_by";
           versus = "versus";
         }
       }
-      if (paramteresJson.business_unit) businessUnit = paramteresJson.business_unit;
-      if (paramteresJson.business_function) businessFunction = paramteresJson.business_function;
-      if (paramteresJson.Sub_division) subDivision = paramteresJson.Sub_division;
-      if (paramteresJson.Division) division = paramteresJson.Division;
-      if (paramteresJson.Band) band = paramteresJson.Band;
-      if (paramteresJson.Employee_Group) employeeGroup = paramteresJson.Employee_Group;
-      if (paramteresJson.employee_grade) grade = paramteresJson.employee_grade;
-      if (paramteresJson.age_group) ageGroup = paramteresJson.age_group;
-      if (paramteresJson.domain_type) domainType = paramteresJson.domain_type;
-      if (paramteresJson.Gender) gender = paramteresJson.Gender;
+
+      if (paramteresJson.Sector) sector.push(paramteresJson.Sector);
+      if (paramteresJson.business_unit) businessUnit.push(paramteresJson.business_unit);
+      if (paramteresJson.business_function) businessFunction.push(paramteresJson.business_function);
+      if (paramteresJson.Sub_division) subDivision.push(paramteresJson.Sub_division);
+      if (paramteresJson.Division) division.push(paramteresJson.Division);
+      if (paramteresJson.Band) band.push(paramteresJson.Band);
+      if (paramteresJson.Employee_Group) employeeGroup.push(paramteresJson.Employee_Group);
+      if (paramteresJson.employee_grade) grade.push(paramteresJson.employee_grade);
+      if (paramteresJson.age_group) ageGroup.push(paramteresJson.age_group);
+      if (paramteresJson.domain_type) domainType.push(paramteresJson.domain_type);
+      if (paramteresJson.Gender) gender.push(paramteresJson.Gender);
       if (paramteresJson.Year) year = paramteresJson.Year;
       if (paramteresJson["date-period"]) date = paramteresJson["date-period"];
       if (paramteresJson.number) sysNumber = paramteresJson.number;
-      if (paramteresJson.Department) department = paramteresJson.Department;
-      if (paramteresJson.Sub - department) subDepartment = paramteresJson.Sub - department;
-      if (paramteresJson.company) company = paramteresJson.company;
-      if (paramteresJson.Talent_Category) talentCategory = paramteresJson.Talent_Category;
-      if (paramteresJson.rating) rating = paramteresJson.rating;    
+      if (paramteresJson.Department) department.push(paramteresJson.Department);
+      if (paramteresJson.Sub - department) subDepartment.push(paramteresJson.Sub - department);
+      if (paramteresJson.company) company.push(paramteresJson.company);
+      if (paramteresJson.Talent_Category) talentCategory.push(paramteresJson.Talent_Category);
+      if (paramteresJson.rating) rating.push(paramteresJson.rating);
 
       if (paramteresJson.value_needed) {
         let value_needed = paramteresJson.value_needed;
@@ -274,8 +272,29 @@ module.exports.getBotResponse = function (req, res, next) {
         if (dynamicFilter.Group_by) groupBy = dynamicFilter.Group_by;
         if (dynamicFilter.value1) {
           var dynamicFilterValue1 = dynamicFilter.value1;
-          if (dynamicFilterValue1.filter) filter1 = dynamicFilterValue1.filter;
-          if (dynamicFilterValue1.kpi_name) filter1 = dynamicFilterValue1.kpi_name.kpi_name;
+          if (dynamicFilterValue1.filter) filter1.push(dynamicFilterValue1.filter);
+          if (dynamicFilterValue1.kpi_name) filter1.push(dynamicFilterValue1.kpi_name.kpi_name);
+          if (dynamicFilterValue1.YOY) yoy = dynamicFilterValue1.YOY;
+          if (dynamicFilterValue1.duration_type) typeDuration = dynamicFilterValue1.duration_type;
+        }
+        if (dynamicFilter.value2) {
+          var dynamicFilterValue1 = dynamicFilter.value2;
+          if (dynamicFilterValue1.filter) filter1.push(dynamicFilterValue1.filter);
+          if (dynamicFilterValue1.kpi_name) filter1.push(dynamicFilterValue1.kpi_name.kpi_name);
+          if (dynamicFilterValue1.YOY) yoy = dynamicFilterValue1.YOY;
+          if (dynamicFilterValue1.duration_type) typeDuration = dynamicFilterValue1.duration_type;
+        }
+        if (dynamicFilter.value3) {
+          var dynamicFilterValue1 = dynamicFilter.value3;
+          if (dynamicFilterValue1.filter) filter1.push(dynamicFilterValue1.filter);
+          if (dynamicFilterValue1.kpi_name) filter1.push(dynamicFilterValue1.kpi_name.kpi_name);
+          if (dynamicFilterValue1.YOY) yoy = dynamicFilterValue1.YOY;
+          if (dynamicFilterValue1.duration_type) typeDuration = dynamicFilterValue1.duration_type;
+        }
+        if (dynamicFilter.value4) {
+          var dynamicFilterValue1 = dynamicFilter.value4;
+          if (dynamicFilterValue1.filter) filter1.push(dynamicFilterValue1.filter);
+          if (dynamicFilterValue1.kpi_name) filter1.push(dynamicFilterValue1.kpi_name.kpi_name);
           if (dynamicFilterValue1.YOY) yoy = dynamicFilterValue1.YOY;
           if (dynamicFilterValue1.duration_type) typeDuration = dynamicFilterValue1.duration_type;
         }
@@ -288,73 +307,73 @@ module.exports.getBotResponse = function (req, res, next) {
           if (dynamicFilterValue.yoy_true) yoy = dynamicFilterValue.yoy_true;
           if (dynamicFilterValue["FollowupWhereFilter"]) {
             let followupdynamicfilterValue = dynamicFilterValue["FollowupWhereFilter"];
-            if (followupdynamicfilterValue.Sector) sector = followupdynamicfilterValue.Sector;
-            if (followupdynamicfilterValue.business_unit) businessUnit = followupdynamicfilterValue.business_unit;
-            if (followupdynamicfilterValue.business_function) businessFunction = followupdynamicfilterValue.business_function;
-            if (followupdynamicfilterValue.Sub_division) subDivision = followupdynamicfilterValue.Sub_division;
-            if (followupdynamicfilterValue.Division) division = followupdynamicfilterValue.Division;
-            if (followupdynamicfilterValue.Band) band = followupdynamicfilterValue.Band;
-            if (followupdynamicfilterValue.Employee_Group) employeeGroup = followupdynamicfilterValue.Employee_Group;
-            if (followupdynamicfilterValue.employee_grade) grade = followupdynamicfilterValue.employee_grade;
-            if (followupdynamicfilterValue.age_group) ageGroup = followupdynamicfilterValue.age_group;
-            if (followupdynamicfilterValue.domain_type) domainType = followupdynamicfilterValue.domain_type;
-            if (followupdynamicfilterValue.Gender) gender = followupdynamicfilterValue.Gender;
+            if (followupdynamicfilterValue.Sector) sector.push(followupdynamicfilterValue.Sector);
+            if (followupdynamicfilterValue.business_unit) businessUnit.push(followupdynamicfilterValue.business_unit);
+            if (followupdynamicfilterValue.business_function) businessFunction.push(followupdynamicfilterValue.business_function);
+            if (followupdynamicfilterValue.Sub_division) subDivision.push(followupdynamicfilterValue.Sub_division);
+            if (followupdynamicfilterValue.Division) division.push(followupdynamicfilterValue.Division);
+            if (followupdynamicfilterValue.Band) band.push(followupdynamicfilterValue.Band);
+            if (followupdynamicfilterValue.Employee_Group) employeeGroup.push(followupdynamicfilterValue.Employee_Group);
+            if (followupdynamicfilterValue.employee_grade) grade.push(followupdynamicfilterValue.employee_grade);
+            if (followupdynamicfilterValue.age_group) ageGroup.push(followupdynamicfilterValue.age_group);
+            if (followupdynamicfilterValue.domain_type) domainType.push(followupdynamicfilterValue.domain_type);
+            if (followupdynamicfilterValue.Gender) gender.push(followupdynamicfilterValue.Gender);
             if (followupdynamicfilterValue.Year) year = followupdynamicfilterValue.Year;
             if (followupdynamicfilterValue["date-period"]) date = followupdynamicfilterValue["date-period"];
             if (followupdynamicfilterValue.number) sysNumber = followupdynamicfilterValue.number;
-            if (followupdynamicfilterValue.Department) department = followupdynamicfilterValue.Department;
-            if (followupdynamicfilterValue.Sub - department) subDepartment = followupdynamicfilterValue.Sub - department;
-            if (followupdynamicfilterValue.company) company = followupdynamicfilterValue.company;
-            if (followupdynamicfilterValue.Talent_Category) talentCategory = followupdynamicfilterValue.Talent_Category;
-            if (followupdynamicfilterValue.rating) rating = followupdynamicfilterValue.rating;
+            if (followupdynamicfilterValue.Department) department.push(followupdynamicfilterValue.Department);
+            if (followupdynamicfilterValue.Sub - department) subDepartment.push(followupdynamicfilterValue.Sub - department);
+            if (followupdynamicfilterValue.company) company.push(followupdynamicfilterValue.company);
+            if (followupdynamicfilterValue.Talent_Category) talentCategory.push(followupdynamicfilterValue.Talent_Category);
+            if (followupdynamicfilterValue.rating) rating.push(followupdynamicfilterValue.rating);
           }
         }
 
         if (dynamicFilter.FollowupWhereFilter) {
           let followup = dynamicFilter.FollowupWhereFilter;
-          if (followup.Sector) sector = followup.Sector;
-          if (followup.business_unit) businessUnit = followup.business_unit;
-          if (followup.business_function) businessFunction = followup.business_function;
-          if (followup.Sub_division) subDivision = followup.Sub_division;
-          if (followup.Division) division = followup.Division;
-          if (followup.Band) band = followup.Band;
-          if (followup.Employee_Group) employeeGroup = followup.Employee_Group;
-          if (followup.employee_grade) grade = followup.employee_grade;
-          if (followup.age_group) ageGroup = followup.age_group;
-          if (followup.domain_type) domainType = followup.domain_type;
-          if (followup.Gender) gender = followup.Gender;
+          if (followup.Sector) sector.push(followup.Sector);
+          if (followup.business_unit) businessUnit.push(followup.business_unit);
+          if (followup.business_function) businessFunction.push(followup.business_function);
+          if (followup.Sub_division) subDivision.push(followup.Sub_division);
+          if (followup.Division) division.push(followup.Division);
+          if (followup.Band) band.push(followup.Band);
+          if (followup.Employee_Group) employeeGroup.push(followup.Employee_Group);
+          if (followup.employee_grade) grade.push(followup.employee_grade);
+          if (followup.age_group) ageGroup.push(followup.age_group);
+          if (followup.domain_type) domainType.push(followup.domain_type);
+          if (followup.Gender) gender.push(followup.Gender);
           if (followup.Year) year = followup.Year;
           if (followup["date-period"]) date = followup["date-period"];
           if (followup.number) sysNumber = followup.number;
-          if (followup.Department) department = followup.Department;
-          if (followup.Sub - department) subDepartment = followup.Sub - department;
-          if (followup.company) company = followup.company;
-          if (followup.Talent_Category) talentCategory = followup.Talent_Category;
-          if (followup.rating) rating = followup.rating;
+          if (followup.Department) department.push(followup.Department);
+          if (followup.Sub - department) subDepartment.push(followup.Sub - department);
+          if (followup.company) company.push(followup.company);
+          if (followup.Talent_Category) talentCategory.push(followup.Talent_Category);
+          if (followup.rating) rating.push(followup.rating);
         }
       }
 
       if (paramteresJson.FollowupWhereFilter) {
         var followup = paramteresJson.FollowupWhereFilter;
-        if (followup.Sector) sector = followup.Sector;
-        if (followup.business_unit) businessUnit = followup.business_unit;
-        if (followup.business_function) businessFunction = followup.business_function;
-        if (followup.Sub_division) subDivision = followup.Sub_division;
-        if (followup.Division) division = followup.Division;
-        if (followup.Band) band = followup.Band;
-        if (followup.Employee_Group) employeeGroup = followup.Employee_Group;
-        if (followup.employee_grade) grade = followup.employee_grade;
-        if (followup.age_group) ageGroup = followup.age_group;
-        if (followup.domain_type) domainType = followup.domain_type;
-        if (followup.Gender) gender = followup.Gender;
+        if (followup.Sector) sector.push(followup.Sector);
+        if (followup.business_unit) businessUnit.push(followup.business_unit);
+        if (followup.business_function) businessFunction.push(followup.business_function);
+        if (followup.Sub_division) subDivision.push(followup.Sub_division);
+        if (followup.Division) division.push(followup.Division);
+        if (followup.Band) band.push(followup.Band);
+        if (followup.Employee_Group) employeeGroup.push(followup.Employee_Group);
+        if (followup.employee_grade) grade.push(followup.employee_grade);
+        if (followup.age_group) ageGroup.push(followup.age_group);
+        if (followup.domain_type) domainType.push(followup.domain_type);
+        if (followup.Gender) gender.push(followup.Gender);
         if (followup.Year) year = followup.Year;
         if (followup["date-period"]) date = followup["date-period"];
         if (followup.number) sysNumber = followup.number;
-        if (followup.Department) department = followup.Department;
-        if (followup.Sub - department) subDepartment = followup.Sub - department;
-        if (followup.company) company = followup.company;
-        if (followup.Talent_Category) talentCategory = followup.Talent_Category;
-        if (followup.rating) rating = followup.rating;
+        if (followup.Department) department.push(followup.Department);
+        if (followup.Sub - department) subDepartment.push(followup.Sub - department);
+        if (followup.company) company.push(followup.company);
+        if (followup.Talent_Category) talentCategory.push(followup.Talent_Category);
+        if (followup.rating) rating.push(followup.rating);
       }
 
       if (paramteresJson.Dynamic_filter) {
@@ -375,69 +394,69 @@ module.exports.getBotResponse = function (req, res, next) {
 
         if (Dimension.FollowupWhereFilter) {
           var followupwherefilter = Dimension.FollowupWhereFilter;
-          if (followupwherefilter.Sector) sector = followupwherefilter.Sector;
-          if (followupwherefilter.business_unit) businessUnit = followupwherefilter.business_unit;
-          if (followupwherefilter.business_function) businessFunction = followupwherefilter.business_function;
-          if (followupwherefilter.Sub_division) subDivision = followupwherefilter.Sub_division;
-          if (followupwherefilter.Division) division = followupwherefilter.Division;
-          if (followupwherefilter.Band) band = followupwherefilter.Band;
-          if (followupwherefilter.Employee_Group) employeeGroup = followupwherefilter.Employee_Group;
-          if (followupwherefilter.employee_grade) grade = followupwherefilter.employee_grade;
-          if (followupwherefilter.age_group) ageGroup = followupwherefilter.age_group;
-          if (followupwherefilter.domain_type) domainType = followupwherefilter.domain_type;
-          if (followupwherefilter.Gender) gender = followupwherefilter.Gender;
-          if (followupwherefilter.Year) year = followupwherefilter.Year;
+          if (followupwherefilter.Sector) sector.push(followupwherefilter.Sector);
+          if (followupwherefilter.business_unit) businessUnit.push(followupwherefilter.business_unit);
+          if (followupwherefilter.business_function) businessFunction.push(followupwherefilter.business_function);
+          if (followupwherefilter.Sub_division) subDivision.push(followupwherefilter.Sub_division);
+          if (followupwherefilter.Division) division.push(followupwherefilter.Division);
+          if (followupwherefilter.Band) band.push(followupwherefilter.Band);
+          if (followupwherefilter.Employee_Group) employeeGroup.push(followupwherefilter.Employee_Group);
+          if (followupwherefilter.employee_grade) grade.push(followupwherefilter.employee_grade);
+          if (followupwherefilter.age_group) ageGroup.push(followupwherefilter.age_group);
+          if (followupwherefilter.domain_type) domainType.push(followupwherefilter.domain_type);
+          if (followupwherefilter.Gender) gender.push(followupwherefilter.Gender);
+          if (followupwherefilter.Year) year followupwherefilter.Year;
           if (followupwherefilter["date-period"]) date = followupwherefilter["date-period"];
           if (followupwherefilter.number) sysNumber = followupwherefilter.number;
-          if (followupwherefilter.Department) department = followupwherefilter.Department;
-          if (followupwherefilter.Sub-department) subDepartment = followupwherefilter.Sub-department;
-          if (followupwherefilter.company) company = followupwherefilter.company;
-          if (followupwherefilter.Talent_Category) talentCategory = followupwherefilter.Talent_Category;
-          if (followupwherefilter.rating) rating = followupwherefilter.rating;
+          if (followupwherefilter.Department) department.push(followupwherefilter.Department);
+          if (followupwherefilter.Sub-department) subDepartment.push(followupwherefilter.Sub-department);
+          if (followupwherefilter.company) company.push(followupwherefilter.company);
+          if (followupwherefilter.Talent_Category) talentCategory.push(followupwherefilter.Talent_Category);
+          if (followupwherefilter.rating) rating.push(followupwherefilter.rating);
           if (Dimension.FollowupWhereFilter1) {
             var followupwherefilter1 = Dimension.FollowupWhereFilter1;
-            if (followupwherefilter1.Sector) sector = followupwherefilter1.Sector;
-            if (followupwherefilter1.business_unit) businessUnit = followupwherefilter1.business_unit;
-            if (followupwherefilter1.business_function) businessFunction = followupwherefilter1.business_function;
-            if (followupwherefilter1.Sub_division) subDivision = followupwherefilter1.Sub_division;
-            if (followupwherefilter1.Division) division = followupwherefilter1.Division;
-            if (followupwherefilter1.Band) band = followupwherefilter1.Band;
-            if (followupwherefilter1.Employee_Group) employeeGroup = followupwherefilter1.Employee_Group;
-            if (followupwherefilter1.employee_grade) grade = followupwherefilter1.employee_grade;
-            if (followupwherefilter1.age_group) ageGroup = followupwherefilter1.age_group;
-            if (followupwherefilter1.domain_type) domainType = followupwherefilter1.domain_type;
-            if (followupwherefilter1.Gender) gender = followupwherefilter1.Gender;
+            if (followupwherefilter1.Sector) sector.push(followupwherefilter1.Sector);
+            if (followupwherefilter1.business_unit) businessUnit.push(followupwherefilter1.business_unit);
+            if (followupwherefilter1.business_function) businessFunction.push(followupwherefilter1.business_function);
+            if (followupwherefilter1.Sub_division) subDivision.push(followupwherefilter1.Sub_division);
+            if (followupwherefilter1.Division) division.push(followupwherefilter1.Division);
+            if (followupwherefilter1.Band) band.push(followupwherefilter1.Band);
+            if (followupwherefilter1.Employee_Group) employeeGroup.push(followupwherefilter1.Employee_Group);
+            if (followupwherefilter1.employee_grade) grade.push(followupwherefilter1.employee_grade);
+            if (followupwherefilter1.age_group) ageGroup.push(followupwherefilter1.age_group);
+            if (followupwherefilter1.domain_type) domainType.push(followupwherefilter1.domain_type);
+            if (followupwherefilter1.Gender) gender.push(followupwherefilter1.Gender);
             if (followupwherefilter1.Year) year = followupwherefilter1.Year;
             if (followupwherefilter1["date-period"]) date = followupwherefilter1["date-period"];
             if (followupwherefilter1.number) sysNumber = followupwherefilter1.number;
-            if (followupwherefilter1.Department) department = followupwherefilter1.Department;
-            if (followupwherefilter1.Sub-department) subDepartment = followupwherefilter1.Sub-department;
-            if (followupwherefilter1.company) company = followupwherefilter1.company;
-            if (followupwherefilter1.Talent_Category) talentCategory = followupwherefilter1.Talent_Category;
-            if (followupwherefilter1.rating) rating = followupwherefilter1.rating;
+            if (followupwherefilter1.Department) department.push(followupwherefilter1.Department);
+            if (followupwherefilter1.Sub-department) subDepartment.push(followupwherefilter1.Sub-department);
+            if (followupwherefilter1.company) company.push(followupwherefilter1.company);
+            if (followupwherefilter1.Talent_Category) talentCategory.push(followupwherefilter1.Talent_Category);
+            if (followupwherefilter1.rating) rating.push(followupwherefilter1.rating);
           }
 
           if (Dimension.FollowupWhereFilter2) {
             var followupwherefilter2 = Dimension.FollowupWhereFilter2;
-            if (followupwherefilter2.Sector) sector = followupwherefilter2.Sector;
-            if (followupwherefilter2.business_unit) businessUnit = followupwherefilter2.business_unit;
-            if (followupwherefilter2.business_function) businessFunction = followupwherefilter2.business_function;
-            if (followupwherefilter2.Sub_division) subDivision = followupwherefilter2.Sub_division;
-            if (followupwherefilter2.Division) division = followupwherefilter2.Division;
-            if (followupwherefilter2.Band) band = followupwherefilter2.Band;
-            if (followupwherefilter2.Employee_Group) employeeGroup = followupwherefilter2.Employee_Group;
-            if (followupwherefilter2.employee_grade) grade = followupwherefilter2.employee_grade;
-            if (followupwherefilter2.age_group) ageGroup = followupwherefilter2.age_group;
-            if (followupwherefilter2.domain_type) domainType = followupwherefilter2.domain_type;
-            if (followupwherefilter2.Gender) gender = followupwherefilter2.Gender;
+            if (followupwherefilter2.Sector) sector.push(followupwherefilter2.Sector);
+            if (followupwherefilter2.business_unit) businessUnit.push(followupwherefilter2.business_unit);
+            if (followupwherefilter2.business_function) businessFunction.push(followupwherefilter2.business_function);
+            if (followupwherefilter2.Sub_division) subDivision.push(followupwherefilter2.Sub_division);
+            if (followupwherefilter2.Division) division.push(followupwherefilter2.Division);
+            if (followupwherefilter2.Band) band.push(followupwherefilter2.Band);
+            if (followupwherefilter2.Employee_Group) employeeGroup.push(followupwherefilter2.Employee_Group);
+            if (followupwherefilter2.employee_grade) grade.push(followupwherefilter2.employee_grade);
+            if (followupwherefilter2.age_group) ageGroup.push(followupwherefilter2.age_group);
+            if (followupwherefilter2.domain_type) domainType.push(followupwherefilter2.domain_type);
+            if (followupwherefilter2.Gender) gender.push(followupwherefilter2.Gender);
             if (followupwherefilter2.Year) year = followupwherefilter2.Year;
             if (followupwherefilter2["date-period"]) date = followupwherefilter2["date-period"];
             if (followupwherefilter2.number) sysNumber = followupwherefilter2.number;
-            if (followupwherefilter2.Department) department = followupwherefilter2.Department;
-            if (followupwherefilter2.Sub-department) subDepartment = followupwherefilter2.Sub-department;
-            if (followupwherefilter2.company) company = followupwherefilter2.company;
-            if (followupwherefilter2.Talent_Category) talentCategory = followupwherefilter2.Talent_Category;
-            if (followupwherefilter2.rating) rating = followupwherefilter2.rating;
+            if (followupwherefilter2.Department) department.push(followupwherefilter2.Department);
+            if (followupwherefilter2.Sub-department) subDepartment.push(followupwherefilter2.Sub-department);
+            if (followupwherefilter2.company) company.push(followupwherefilter2.company);
+            if (followupwherefilter2.Talent_Category) talentCategory.push(followupwherefilter2.Talent_Category);
+            if (followupwherefilter2.rating) rating.push(followupwherefilter2.rating);
           }
         }
       }
@@ -531,15 +550,14 @@ module.exports.getBotResponse = function (req, res, next) {
     var json = {
       "userId": userId,
       "question": text,
-      "entity0": entity0,
       "entity1": entity1,
       "entity2": entity2,
       "entity3": entity3,
+      "entity4": entity4,
       "filter": filter,
       "filter1": filter1,
-      "entity4": entity4,
-      // "entity5" : entity5,
       "sector": sector,
+      "businessFunction": businessFunction,
       "businessUnit": businessUnit,
       "division": division,
       "subDivision": subDivision,
@@ -547,7 +565,10 @@ module.exports.getBotResponse = function (req, res, next) {
       "subDepartment": subDepartment,
       "company": company,
       "grade": grade,
-      "level": timeLevel,
+      "band": band,
+      "level": "",
+      "talentCategory": talentCategory,
+      "rating":rating,
       "date": date,
       "domainType": domainType,
       "gender": gender,
@@ -555,7 +576,6 @@ module.exports.getBotResponse = function (req, res, next) {
       "startDate": startDate,
       "endDate": endDate,
       "listSort": "",
-      "groupBy": groupBy,
       "tenureGroup": tenureGroup,
       "month": month,
       "employeeGroup": employeeGroup,
@@ -568,9 +588,7 @@ module.exports.getBotResponse = function (req, res, next) {
       "percentage": percentage,
       "overallAFStransfer": overallAFStransfer,
       "difference": difference,
-      "businessFunction": businessFunction,
       "transferFlag": transferFlag,
-      "band": band,
       "age": age,
       "tenure": tenure,
       "sizeOfTeam": sizeOfTeam,
@@ -581,13 +599,7 @@ module.exports.getBotResponse = function (req, res, next) {
       "versus": versus,
       "common":common,
       "commonType":commonType,
-      "talentCategory": talentCategory,
-      "performanceScore": performanceScore,
-      "rating":rating
-
-      // "employeeGroup1": employeeGroup1,
-      // "employeeGroup2": employeeGroup2
-
+      "performanceScore": performanceScore
     };
 
 //    console.log("DL model request body is " + JSON.stringify(json, null, 4));
@@ -696,7 +708,7 @@ module.exports.getBotResponse = function (req, res, next) {
     //     }
 
     //     else {
-    //       aiText = `According to the authentication list, you are not supposed to view the data for this particular dimension. 
+    //       aiText = `According to the authentication list, you are not supposed to view the data for this particular dimension.
     //               Please try asking information on the other dimensions of Mahindra.`;
 
     //       insertRecord(employeeId, text, aiText);
@@ -764,9 +776,8 @@ function saveBase64ToFile(base64Data) {
 async function downloadIMG(options) {
   try {
     const { filename, image } = await download.image(options)
-    console.log(filename) // => /path/to/dest/image.jpg 
+    console.log(filename) // => /path/to/dest/image.jpg
   } catch (e) {
     console.error(e)
   }
 }
-
