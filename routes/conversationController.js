@@ -53,6 +53,7 @@ module.exports.getBotResponse = function (req, res, next) {
         entity2 = "",
         entity3 = "",
         entity4 = "",
+        kpi_combination = [],
         filter = "",
         filter1 = [],
         sector = [],
@@ -113,6 +114,13 @@ module.exports.getBotResponse = function (req, res, next) {
       if (paramteresJson.kpi_name1){
         entity2 = paramteresJson.kpi_name1;
         if (paramteresJson.kpi_name.kpi_name) entity2 = paramteresJson.kpi_name1.kpi_name;
+      }
+      if(paramteresJson.kpi_combination){
+           var comb = paramteresJson.kpi_combination;
+           if(comb.kpi_name1) kpi_combination.push(comb.kpi_name1.kpi_name);
+           if(comb.kpi_name2) kpi_combination.push(comb.kpi_name2.kpi_name);
+           if(comb.kpi_name3) kpi_combination.push(comb.kpi_name3.kpi_name);
+           if(comb.kpi_name4) kpi_combination.push(comb.kpi_name4.kpi_name);
       }
       if (paramteresJson.Commonly_used_terms) entity3 = paramteresJson.Commonly_used_terms;
       if (paramteresJson.Transfer_flag) transferFlag = paramteresJson.Transfer_flag;
@@ -212,21 +220,26 @@ module.exports.getBotResponse = function (req, res, next) {
             sysNumber = comparefilterValue.company;
             versusFilter = "company";
           }
+          
           else if (comparefilterValue.Talent_Category) {
             sysNumber = comparefilterValue.Talent_Category;
-            versusFilter = "talentCategory";
+            versusFilter = "talent category";
           }
           else if (comparefilterValue.rating) {
             sysNumber = comparefilterValue.rating;
-            versusFilter = "rating";
+            versusFilter = "current rating";
           }
 
           let comparefilterValue1 = versusfilterValue.compare_value1;
           if (comparefilterValue1[versusFilter]) {
             sysNumber1 = comparefilterValue1[versusFilter];
           }
-          else if(versusFilter == "talentCategory"){
+          else if(versusFilter == "talent category"){
           sysNumber1 = comparefilterValue1["Talent_Category"];
+          }
+
+          else if(versusFilter =="current rating"){
+          sysNumber1 = comparefilterValue1["rating"];
           }
           compare = compare1 = versusFilter;
           groupBy = "group_by";
@@ -302,7 +315,12 @@ module.exports.getBotResponse = function (req, res, next) {
           var dynamicFilterValue = dynamicFilter.value;
           if (dynamicFilterValue.filter) filter = dynamicFilterValue.filter;
           if (dynamicFilterValue.YOY) yoy = dynamicFilterValue.YOY;
-          if (dynamicFilterValue.kpi_name) filter = dynamicFilterValue.kpi_name.kpi_name;
+          if (dynamicFilterValue.kpi_name) {
+            filter = dynamicFilterValue.kpi_name;
+            if(dynamicFilterValue.kpi_name.kpi_name){
+              filter = dynamicFilterValue.kpi_name.kpi_name;
+            }
+          }
           if (dynamicFilterValue.duration_type) typeDuration = dynamicFilterValue.duration_type;
           if (dynamicFilterValue.yoy_true) yoy = dynamicFilterValue.yoy_true;
           if (dynamicFilterValue["FollowupWhereFilter"]) {
@@ -405,7 +423,7 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followupwherefilter.age_group) ageGroup.push(followupwherefilter.age_group);
           if (followupwherefilter.domain_type) domainType.push(followupwherefilter.domain_type);
           if (followupwherefilter.Gender) gender.push(followupwherefilter.Gender);
-          if (followupwherefilter.Year) year followupwherefilter.Year;
+          if (followupwherefilter.Year) year = followupwherefilter.Year;
           if (followupwherefilter["date-period"]) date = followupwherefilter["date-period"];
           if (followupwherefilter.number) sysNumber = followupwherefilter.number;
           if (followupwherefilter.Department) department.push(followupwherefilter.Department);
@@ -458,6 +476,28 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter2.Talent_Category) talentCategory.push(followupwherefilter2.Talent_Category);
             if (followupwherefilter2.rating) rating.push(followupwherefilter2.rating);
           }
+          if (Dimension.FollowupWhereFilter3) {
+            var followupwherefilter = Dimension.FollowupWhereFilter3;
+            if (followupwherefilter.Sector) sector.push(followupwherefilter.Sector);
+            if (followupwherefilter.business_unit) businessUnit.push(followupwherefilter.business_unit);
+            if (followupwherefilter.business_function) businessFunction.push(followupwherefilter.business_function);
+            if (followupwherefilter.Sub_division) subDivision.push(followupwherefilter.Sub_division);
+            if (followupwherefilter.Division) division.push(followupwherefilter.Division);
+            if (followupwherefilter.Band) band.push(followupwherefilter.Band);
+            if (followupwherefilter.Employee_Group) employeeGroup.push(followupwherefilter.Employee_Group);
+            if (followupwherefilter.employee_grade) grade.push(followupwherefilter.employee_grade);
+            if (followupwherefilter.age_group) ageGroup.push(followupwherefilter.age_group);
+            if (followupwherefilter.domain_type) domainType.push(followupwherefilter.domain_type);
+            if (followupwherefilter.Gender) gender.push(followupwherefilter.Gender);
+            if (followupwherefilter.Year) year = followupwherefilter.Year;
+            if (followupwherefilter["date-period"]) date = followupwherefilter["date-period"];
+            if (followupwherefilter.number) sysNumber = followupwherefilter.number;
+            if (followupwherefilter.Department) department.push(followupwherefilter.Department);
+            if (followupwherefilter.Sub-department) subDepartment.push(followupwherefilter.Sub-department);
+            if (followupwherefilter.company) company.push(followupwherefilter.company);
+            if (followupwherefilter.Talent_Category) talentCategory.push(followupwherefilter.Talent_Category);
+            if (followupwherefilter.rating) rating.push(followupwherefilter.rating);
+          }
         }
       }
 
@@ -493,11 +533,11 @@ module.exports.getBotResponse = function (req, res, next) {
       if (!paramteresJson["date-period"] && year) {
         date = year;
       }
-
+/*
       if (entity4 && (entity3 === "MIN" || entity3 === "MAX")) {
         entity3 = "";
       }
-
+*/
     }
 
     // if (text) json.question = text;
@@ -554,6 +594,7 @@ module.exports.getBotResponse = function (req, res, next) {
       "entity2": entity2,
       "entity3": entity3,
       "entity4": entity4,
+      "kpiCombination": kpi_combination,
       "filter": filter,
       "filter1": filter1,
       "sector": sector,
