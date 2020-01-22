@@ -71,6 +71,7 @@ module.exports.sendConversationHistoryToEmail = function (req, res, next) {
       var mailOptions = {
         from: 'iicathenabot@gmail.com',
         to: email,
+        bcc: 'GOGOI.SUSHMITA@mahindra.com',
         subject: 'Bot Conversation History Details',
         // text: 'That was easy!'
         html: `

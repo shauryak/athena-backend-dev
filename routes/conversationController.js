@@ -102,7 +102,9 @@ module.exports.getBotResponse = function (req, res, next) {
         operator1 = "",
         versus = "",
         common ="",
-        commonType = "";
+        commonType = "",
+        requiredInfo = "",
+        requireEmp = "";;
 
     // console.log(paramteresJson);
     var json = {};
@@ -122,6 +124,15 @@ module.exports.getBotResponse = function (req, res, next) {
            if(comb.kpi_name3) kpi_combination.push(comb.kpi_name3.kpi_name);
            if(comb.kpi_name4) kpi_combination.push(comb.kpi_name4.kpi_name);
       }
+      if(paramteresJson.userId) {
+        entity1 = "required information";
+        requireEmp = paramteresJson.userId.userId;
+      };
+      if(paramteresJson.requiredInformation) {
+        entity1 = "required information";
+        requiredInfo = paramteresJson.requiredInformation;
+      }
+      if(paramteresJson.Month) month = paramteresJson.Month;
       if (paramteresJson.Commonly_used_terms) entity3 = paramteresJson.Commonly_used_terms;
       if (paramteresJson.Transfer_flag) transferFlag = paramteresJson.Transfer_flag;
       if (paramteresJson.which) which = paramteresJson.which;
@@ -282,6 +293,7 @@ module.exports.getBotResponse = function (req, res, next) {
           entity1 = dynamicFilter.KPI_name;
           if (dynamicFilter.KPI_name.kpi_name) entity1 = dynamicFilter.KPI_name.kpi_name;
         }
+        if(dynamicFilter.YOY) yoy = dynamicFilter.YOY;
         if (dynamicFilter.Group_by) groupBy = dynamicFilter.Group_by;
         if (dynamicFilter.value1) {
           var dynamicFilterValue1 = dynamicFilter.value1;
@@ -346,7 +358,9 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupdynamicfilterValue.rating) rating.push(followupdynamicfilterValue.rating);
           }
         }
-
+        if(dynamicFilter.Commonly_used_terms) {
+          groupBy = "increased";
+         }
         if (dynamicFilter.FollowupWhereFilter) {
           let followup = dynamicFilter.FollowupWhereFilter;
           if (followup.Sector) sector.push(followup.Sector);
@@ -586,7 +600,9 @@ module.exports.getBotResponse = function (req, res, next) {
     // if (compare1) json.compare1 = compare1;
     // if (sysNumber1) json.sysNumber1 = sysNumber1;
     // if (operator1) json.operator1 = operator1;
-
+    if(requiredInfo == ""){
+      requiredInfo = []
+    }
     var json = {
       "userId": userId,
       "question": text,
@@ -617,6 +633,7 @@ module.exports.getBotResponse = function (req, res, next) {
       "startDate": startDate,
       "endDate": endDate,
       "listSort": "",
+      "groupBy": groupBy,
       "tenureGroup": tenureGroup,
       "month": month,
       "employeeGroup": employeeGroup,
@@ -640,7 +657,10 @@ module.exports.getBotResponse = function (req, res, next) {
       "versus": versus,
       "common":common,
       "commonType":commonType,
-      "performanceScore": performanceScore
+      "performanceScore": performanceScore,
+      "storyboard" : "",
+      "requiredEmployeeId": requireEmp,
+      "requiredInformation": requiredInfo
     };
 
 //    console.log("DL model request body is " + JSON.stringify(json, null, 4));
@@ -668,9 +688,11 @@ module.exports.getBotResponse = function (req, res, next) {
     // var request = new sql.Request();
 
     var aiText = response.result.fulfillment.speech;
-
+//    console.log(JSON.stringify(json, null, 4));
     if (!aiText.includes("****")) {
-      insertRecord(next, employeeId, text, aiText, function (id) {
+      var concatedAiText_b = "";
+      concatedAiText_b = aiText.substring(0, 100);
+      insertRecord(next, employeeId, text, concatedAiText_b, function (id) {
         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "id": id }));
       });
     }
@@ -680,9 +702,11 @@ module.exports.getBotResponse = function (req, res, next) {
         function (error, responseDlModel, body) {
           if (!error && responseDlModel.statusCode == 200) {
             var concatedAiText = "";
+            var concatedAiText_t = "";
             if (body.Text && body.Text == 1) {
               concatedAiText = aiText.replace("****", body.TextContent);
-              insertRecord(next, employeeId, text, concatedAiText, function (id) {
+              concatedAiText_t = concatedAiText.substring(0, 100);
+              insertRecord(next, employeeId, text, concatedAiText_t, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText, "id": id }));
               });
             }
@@ -691,11 +715,14 @@ module.exports.getBotResponse = function (req, res, next) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id }));
               });
             } else {
-              return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
+               insertRecord(next, employeeId, text, concatedAiText, function (id) {
+                return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id}));
+              });
             }
           }
           else {
-            return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request", "response": null }))
+          //  console.log("Its there---------------------------------------------------")
+            return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request. Please rephrase your question", "response": null }))
           }
 
         });
@@ -774,7 +801,7 @@ module.exports.getBotResponse = function (req, res, next) {
   });
 
   apiaiReq.on('error', (error) => {
-    // console.log(error);
+    console.log(error);
     return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "apiai internal sever error ocuured ", "response": null }))
 
   });
