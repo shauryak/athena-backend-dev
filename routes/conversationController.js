@@ -13,9 +13,9 @@ const requestModule = require('request');
 var base64Img = require('base64-img');
 const download = require('image-downloader');
 const baseUrl = require('../constants/baseUrl').BASE_URL;
+var path = require('path');
 
 module.exports.getBotResponse = function (req, res, next) {
-
   // if (!req.query.userId) return res.status(400).send("userId cannot be empty");
   // if (!req.query.q) return res.status(400).send("user query q cannot be empty");
   // const userId = req.query.userId;
@@ -32,7 +32,6 @@ module.exports.getBotResponse = function (req, res, next) {
 
 
   apiaiReq.on('response', (response) => {
-
     let paramteresJson = response.result.parameters;
 
     let contextJson = response.result.contexts;
@@ -104,7 +103,8 @@ module.exports.getBotResponse = function (req, res, next) {
         common ="",
         commonType = "",
         requiredInfo = "",
-        requireEmp = "";;
+        storyboard = "",
+         requireEmp = "";
 
     // console.log(paramteresJson);
     var json = {};
@@ -443,7 +443,10 @@ module.exports.getBotResponse = function (req, res, next) {
           if (followupwherefilter.Department) department.push(followupwherefilter.Department);
           if (followupwherefilter.Sub-department) subDepartment.push(followupwherefilter.Sub-department);
           if (followupwherefilter.company) company.push(followupwherefilter.company);
-          if (followupwherefilter.Talent_Category) talentCategory.push(followupwherefilter.Talent_Category);
+          if (followupwherefilter.Talent_Category) {
+            talentCategory.push(followupwherefilter.Talent_Category);
+            storyboard = "talent"
+          }
           if (followupwherefilter.rating) rating.push(followupwherefilter.rating);
           if (Dimension.FollowupWhereFilter1) {
             var followupwherefilter1 = Dimension.FollowupWhereFilter1;
@@ -509,7 +512,11 @@ module.exports.getBotResponse = function (req, res, next) {
             if (followupwherefilter.Department) department.push(followupwherefilter.Department);
             if (followupwherefilter.Sub-department) subDepartment.push(followupwherefilter.Sub-department);
             if (followupwherefilter.company) company.push(followupwherefilter.company);
-            if (followupwherefilter.Talent_Category) talentCategory.push(followupwherefilter.Talent_Category);
+            if (followupwherefilter.Talent_Category)
+            {
+              talentCategory.push(followupwherefilter.Talent_Category);
+              storyboard = "talent";
+            } 
             if (followupwherefilter.rating) rating.push(followupwherefilter.rating);
           }
         }
@@ -602,6 +609,15 @@ module.exports.getBotResponse = function (req, res, next) {
     // if (operator1) json.operator1 = operator1;
     if(requiredInfo == ""){
       requiredInfo = []
+    } 
+     if(entity1 === 'critical positions'){
+      storyboard = "talent"
+    }else{
+      storyboard = storyboard
+    }
+
+    if (filter.toLowerCase() === "talent category" || filter1.includes("talent category")) {
+      storyboard = "talent" 
     }
     var json = {
       "userId": userId,
@@ -658,12 +674,12 @@ module.exports.getBotResponse = function (req, res, next) {
       "common":common,
       "commonType":commonType,
       "performanceScore": performanceScore,
-      "storyboard" : "",
+      "storyboard" : storyboard ,
       "requiredEmployeeId": requireEmp,
       "requiredInformation": requiredInfo
     };
 
-//    console.log("DL model request body is " + JSON.stringify(json, null, 4));
+  //  console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 
@@ -692,6 +708,7 @@ module.exports.getBotResponse = function (req, res, next) {
     if (!aiText.includes("****")) {
       var concatedAiText_b = "";
       concatedAiText_b = aiText.substring(0, 100);
+    //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
       insertRecord(next, employeeId, text, concatedAiText_b, function (id) {
         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "id": id }));
       });
@@ -706,15 +723,18 @@ module.exports.getBotResponse = function (req, res, next) {
             if (body.Text && body.Text == 1) {
               concatedAiText = aiText.replace("****", body.TextContent);
               concatedAiText_t = concatedAiText.substring(0, 100);
+            //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
               insertRecord(next, employeeId, text, concatedAiText_t, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText, "id": id }));
               });
             }
             else if (body.Chart && body.ChartURL && body.Chart == 1) {
+           //   return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
               insertRecord(next, employeeId, text, body.ChartURL, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id }));
               });
             } else {
+            //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body}));
                insertRecord(next, employeeId, text, concatedAiText, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id}));
               });
