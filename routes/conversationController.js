@@ -46,7 +46,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     }
 
-    console.log(paramteresJson);
+    // console.log(paramteresJson);
 
     let entity1 = "",
         entity2 = "",
@@ -679,7 +679,7 @@ module.exports.getBotResponse = function (req, res, next) {
       "requiredInformation": requiredInfo
     };
 
-   console.log("DL model request body is " + JSON.stringify(json, null, 4));
+  //  console.log("DL model request body is " + JSON.stringify(json, null, 4));
 
     let employeeId = userId;
 
