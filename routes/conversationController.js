@@ -644,14 +644,14 @@ module.exports.getBotResponse = function (req, res, next) {
 
     var aiText = response.result.fulfillment.speech;
      
-    if (storyboard && storyboard.toLowerCase() === "talent" ){
-      aiText = "This kpi is under development . You can try asking the below " + applicationConstants.defaultResponse;
+    if (storyboard && applicationConstants.storyboardUnderDevelopment.includes(storyboard.toLowerCase())){
+      aiText = `${storyboard} is under development . You can try asking the below `+ applicationConstants.defaultResponse;
     }
 
     if (!aiText.includes("****")) {
       var concatedAiText_b = "";
       concatedAiText_b = aiText.substring(0, 100);
-  // return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
+     // return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
       insertRecord(next, employeeId, text, concatedAiText_b, function (id) {
         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "id": id }));
       });
@@ -676,18 +676,18 @@ module.exports.getBotResponse = function (req, res, next) {
                     concatedAiText = body.TextContent + " . You can try asking the below  " + defaultResponse;
                     concatedAiText_t = concatedAiText.substring(0, 100);
                   }
-         //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
+         // return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
               insertRecord(next, employeeId, text, concatedAiText_t, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText, "id": id }));
               });
             }
             else if (body.Chart && body.ChartURL && body.Chart == 1) {
-        //   return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
+       //   return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
               insertRecord(next, employeeId, text, body.ChartURL, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id }));
               });
             } else {
-         //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body}));
+        //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body}));
                insertRecord(next, employeeId, text, concatedAiText, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id}));
               });
