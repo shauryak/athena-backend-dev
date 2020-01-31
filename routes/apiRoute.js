@@ -64,7 +64,8 @@ router.use(bodyParser.json());
 // router.get('/', (req, res) => {
 //     res.send('welcome to api route');
 // })
-
+ router.get('/token',verifyToken.createToken)
+ 
  router.all('*',verifyToken.verifyToken);
 
 router.route('/getconversationhistory')

@@ -1,6 +1,6 @@
 const config = require('../config/config');
 module.exports.errorHandler = function (err, req, res, next) {
-
+  // console.log(err);
   if (res.headersSent) {
     // console.log(err);
     return next(err)

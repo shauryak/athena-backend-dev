@@ -14,12 +14,9 @@ var base64Img = require('base64-img');
 const download = require('image-downloader');
 const baseUrl = require('../constants/baseUrl').BASE_URL;
 var path = require('path');
+var applicationConstants = require('../constants/applicationConstant');
 
 module.exports.getBotResponse = function (req, res, next) {
-  // if (!req.query.userId) return res.status(400).send("userId cannot be empty");
-  // if (!req.query.q) return res.status(400).send("user query q cannot be empty");
-  // const userId = req.query.userId;
-  // const text = req.query.q;
 
   if (!req.body.userId) return res.status(400).send("userId cannot be empty");
   if (!req.body.q) return res.status(400).send("user query q cannot be empty");
@@ -46,7 +43,7 @@ module.exports.getBotResponse = function (req, res, next) {
 
     }
 
-    // console.log(paramteresJson);
+    // console.log("Dialogflow response is " + JSON.stringify(paramteresJson, null, 4));
 
     let entity1 = "",
         entity2 = "",
@@ -106,7 +103,6 @@ module.exports.getBotResponse = function (req, res, next) {
         storyboard = "",
          requireEmp = "";
 
-    // console.log(paramteresJson);
     var json = {};
     if (paramteresJson) {
       if (paramteresJson.kpi_name) {
@@ -543,7 +539,6 @@ module.exports.getBotResponse = function (req, res, next) {
             endDate = result[1];
           }
 
-          //  date = datePeriod;
           if (paramteresJson["date-period"].startDate && paramteresJson["date-period"].endDate) {
             startDate = paramteresJson["date-period"].startDate;
             endDate = paramteresJson["date-period"].endDate;
@@ -554,59 +549,9 @@ module.exports.getBotResponse = function (req, res, next) {
       if (!paramteresJson["date-period"] && year) {
         date = year;
       }
-/*
-      if (entity4 && (entity3 === "MIN" || entity3 === "MAX")) {
-        entity3 = "";
-      }
-*/
+
     }
 
-    // if (text) json.question = text;
-    // if (entity0) json.entity0 = entity0;
-    // if (entity1) json.entity1 = entity1;
-    // if (entity2) json.entity2 = entity2;
-    // if (entity3) json.entity3 = entity3;
-    // if (filter) json.filter = filter;
-    // if (entity4) json.entity4 = entity4;
-    // if (entity5) json.entity5 = entity5;
-    // if (sector) json.sector = sector;
-    // if (businessUnit) json.businessUnit = businessUnit;
-    // if (division) json.division = division;
-    // if (subDivision) json.subDivision = subDivision;
-    // if (department) json.department = department;
-    // if (subDepartment) json.subDepartment = subDepartment;
-    // if (company) json.company = company;
-    // if (grade) json.grade = grade;
-    // if (timeLevel) json.level = timeLevel;
-    // if (date) json.date = date;
-    // if (domainType) json.domainType = domainType;
-    // if (gender) json.gender = gender;
-    // if (ageGroup) json.ageGroup = ageGroup;
-    // if (startDate) json.startDate = startDate;
-    // if (endDate) json.endDate = endDate;
-    // if (groupBy) json.groupBy = groupBy;
-    // if (tenureGroup) json.tenureGroup = tenureGroup;
-    // if (month) json.month = month;
-    // if (employeeGroup) json.employeeGroup = employeeGroup;
-    // if (spanOfControl) json.spanOfControl = spanOfControl;
-    // if (which) json.which = which;
-    // if (typeDuration) json.typeDuration = typeDuration;
-    // if (operator) json.operator = operator;
-    // if (sysNumber) json.sysNumber = sysNumber;
-    // if (yoy) json.yoy = yoy;
-    // if (percentage) json.percentage = percentage;
-    // if (overallAFStransfer) json.overallAFStransfer = overallAFStransfer;
-    // if (difference) json.difference = difference;
-    // if (businessFunction) json.businessFunction = businessFunction;
-    // if (transferFlag) json.transferFlag = transferFlag;
-    // if (band) json.band = band;
-    // if (age) json.json.age = age;
-    // if (tenure) json.tenure = tenure;
-    // if (sizeOfTeam) json.sizeOfTeam = sizeOfTeam;
-    // if (compare) json.compare = compare;
-    // if (compare1) json.compare1 = compare1;
-    // if (sysNumber1) json.sysNumber1 = sysNumber1;
-    // if (operator1) json.operator1 = operator1;
     if(requiredInfo == ""){
       requiredInfo = []
     } 
@@ -697,18 +642,16 @@ module.exports.getBotResponse = function (req, res, next) {
       query = query + `AND SA_Division like '%${division}%' `;
     }
 
-    //console.log(query);
-
-    // if (entity1 !== "" || businessUnit !== "" || sector !== "" || division != "") {
-    // create Request object
-    // var request = new sql.Request();
-
     var aiText = response.result.fulfillment.speech;
-//    console.log(JSON.stringify(json, null, 4));
+     
+    if (storyboard && storyboard.toLowerCase() === "talent" ){
+      aiText = "This kpi is under development . You can try asking the below " + applicationConstants.defaultResponse;
+    }
+
     if (!aiText.includes("****")) {
       var concatedAiText_b = "";
       concatedAiText_b = aiText.substring(0, 100);
-  //   return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
+   // return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
       insertRecord(next, employeeId, text, concatedAiText_b, function (id) {
         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "id": id }));
       });
@@ -733,100 +676,30 @@ module.exports.getBotResponse = function (req, res, next) {
                     concatedAiText = body.TextContent + " . You can try asking the below  " + defaultResponse;
                     concatedAiText_t = concatedAiText.substring(0, 100);
                   }
-           //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
+           // return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
               insertRecord(next, employeeId, text, concatedAiText_t, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText, "id": id }));
               });
             }
             else if (body.Chart && body.ChartURL && body.Chart == 1) {
-           //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
+          //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
               insertRecord(next, employeeId, text, body.ChartURL, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id }));
               });
             } else {
-           //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body}));
+          //  return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body}));
                insertRecord(next, employeeId, text, concatedAiText, function (id) {
                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body, "id": id}));
               });
             }
           }
           else {
-          //  console.log("Its there---------------------------------------------------")
             return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": "An error occured while processing your request. Please rephrase your question", "response": null }))
           }
 
         });
 
     }
-
-    // request.query(query, function (err, recordset) {
-
-    //   if (err) {
-    //     console.log("Error while querying database :- ");
-    //     return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": err, "response": null }));
-    //   }
-
-    //   else {
-
-    //     if (recordset.recordset.length > 0) {
-
-    //       var aiText = response.result.fulfillment.speech;
-
-    //       if (!aiText.includes("****")) {
-    //        // insertRecord(employeeId, text, aiText);
-    //         return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
-    //       }
-
-    //       else {
-
-    //         requestModule.post("http://13.232.168.178:8000/customapi", { json: json },
-
-    //           function (error, responseDlModel, body) {
-
-    //             if (!error && responseDlModel.statusCode == 200) {
-
-    //               var concatedAiText = "";
-    //               if (body.Text && body.Text == 1) {
-
-    //                 concatedAiText = aiText.replace("****", body.TextContent);
-    //                 insertRecord(employeeId, text, concatedAiText);
-    //                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": concatedAiText }));
-    //               }
-    //               else {
-    //                 return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText, "responseBody": body }));
-    //               }
-    //             }
-    //             else {
-    //               return res.status(500).send(JSON.stringify({ "statusCode": 500, "error": error, "response": null }))
-    //             }
-
-    //           });
-
-    //       }
-    //     }
-
-    //     else {
-    //       aiText = `According to the authentication list, you are not supposed to view the data for this particular dimension.
-    //               Please try asking information on the other dimensions of Mahindra.`;
-
-    //       insertRecord(employeeId, text, aiText);
-
-    //       return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
-    //     }
-
-    //   }
-
-    // });
-
-    // }
-
-    // else {
-    //   var aiText = response.result.fulfillment.speech;
-    //   //  insertRecord(employeeId, text, aiText);
-    //   return res.status(200).send(JSON.stringify({ "statusCode": 200, "error": null, "response": aiText }));
-    // }
-
-
 
   });
 
@@ -850,12 +723,10 @@ async function insertRecord(next, employeeId, userText, aiText, fn) {
   var chatHistorySql = "INSERT INTO chat_history (employee_id, user_query,bot_response) VALUES (@HD_MASK_ID,@text,@aiText);SELECT SCOPE_IDENTITY() AS id;";
   request.query(chatHistorySql, function (err, result) {
     if (err) {
-      //console.log(err);
       return next(err);
     }
 
     else {
-      // console.log("chat history record inserted");
       if (result && result.recordset && result.recordset.length) {
         fn(result.recordset[0]["id"]);
       }

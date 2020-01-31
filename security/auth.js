@@ -4,7 +4,7 @@ const aes256 = require('aes256');
 
 // const secretKey = "secretkeyofathena123";
 const { SECRET_KEY } = require('../config/config');
-var {decrypt} = require('./aes');
+var {encrypt,decrypt} = require('./aes');
 
 module.exports.verifyToken = function (req, res, next) {
     
@@ -35,4 +35,19 @@ module.exports.verifyToken = function (req, res, next) {
     if (decryptedUserId != userId) return res.status(401).send("Unauthorized");
      
     next();
+}
+
+module.exports.createToken = function(req , res , next){
+
+    let encryptedToken
+   try {
+      encryptedToken  = encrypt(req.query.userId)
+      return res.status(200).send("encrypted token is " + encryptedToken)
+    }
+    catch(exc)
+    {
+        console.log("exception")
+        return res.status(500).send(exc.message)
+    }
+ next();
 }
