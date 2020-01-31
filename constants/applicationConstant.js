@@ -1,2 +1,1 @@
-var entity1 = "headcount";
-module.exports.defaultResponse =   `/ ^ ${entity1} by Sector ^ /^ ${entity1} by Business Unit^ /^ ${entity1} by Division^ /^ ${entity1} by Sub Division^ /^ ${entity1} by Department^ /^ ${entity1} by Sub Department^ /`;
+module.exports.defaultResponse =   `/ ^Headcount^ / ^Hires^ / ^Attrition^ / ^Attrition Rate^ / ^Separation^ / ^Retirement^ / ^Promotion^ / ^Span of Control^ / ^Individual Contributor^ / ^People Manager^ / ^Average Pace of Promotion^ / ^Promotion Rate^ / ^Time in Level^ / ^Average MnM Tenure^ / ^Average Age^`;
