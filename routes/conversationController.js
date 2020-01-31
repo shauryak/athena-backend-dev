@@ -16,6 +16,8 @@ const baseUrl = require('../constants/baseUrl').BASE_URL;
 var path = require('path');
 var applicationConstants = require('../constants/applicationConstant');
 
+//dummy commit by shaurya
+
 module.exports.getBotResponse = function (req, res, next) {
 
   if (!req.body.userId) return res.status(400).send("userId cannot be empty");
